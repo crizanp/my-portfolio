@@ -72,9 +72,8 @@ function Resume() {
               </div>
 
               {/* Projects (3rd) */}
-              <div className="resume-title border-line-h" style={{ marginTop: 60 }}>
-                <div className="icon" data-aos="fade-up"><FaProjectDiagram /></div>
-                <div className="name" data-aos="fade-up">Academic Projects</div>
+              <div className="resume-title " style={{ marginTop: 24 }}>
+                
               </div>
               <div className="row grid-items border-line-v">
                 <ul className="grid-item project-list">
@@ -96,9 +95,8 @@ function Resume() {
               </div>
 
               {/* Skills */}
-              <div className="resume-title border-line-h" style={{ marginTop: 60 }}>
-                <div className="icon" data-aos="fade-up"><FaTools /></div>
-                <div className="name" data-aos="fade-up">Skills</div>
+              <div className="resume-title" style={{ marginTop: 24 }}>
+              
               </div>
               <div className="skills">
                 {SkillSet.map((s) => (
@@ -114,9 +112,8 @@ function Resume() {
               </div>
 
               {/* Languages */}
-              <div className="resume-title border-line-h" style={{ marginTop: 24 }}>
-                <div className="icon" data-aos="fade-up"><FaLanguage /></div>
-                <div className="name" data-aos="fade-up">Languages</div>
+              <div className="resume-title " style={{ marginTop: 24 }}>
+               
               </div>
               <div className="languages">
                 <ul>

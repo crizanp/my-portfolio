@@ -3,21 +3,21 @@ import { IoBrushOutline, IoPhonePortraitOutline } from 'react-icons/io5';
 
 export const SkillSet = [
     // Programming Languages
-    { id: '1', name: 'Python', imgsrc: '' },
+    { id: '1', name: 'Python', imgsrc: 'images/python.png' },
     { id: '3', name: 'JavaScript', imgsrc: 'images/javascript.png' },
     { id: '5', name: 'C', imgsrc: 'images/C.png' },
     { id: '6', name: 'C++', imgsrc: 'images/C++.png' },
     { id: '9', name: 'Node.js', imgsrc: 'images/nodejs.png' },
     { id: '10', name: 'Express.js', imgsrc: 'images/express.png' },
     // Tools & Platforms
-    { id: '13', name: 'Git', imgsrc: '' },
+    { id: '13', name: 'Git', imgsrc: 'images/git.png' },
     { id: '14', name: 'GitHub', imgsrc: 'images/github.png' },
     { id: '15', name: 'MongoDB', imgsrc: 'images/mongodb.png' },
-    { id: '16', name: 'VS Code', imgsrc: '' },
-    { id: '19', name: 'scikit-learn', imgsrc: '' },
-    { id: '21', name: 'TensorFlow', imgsrc: '' },
-    { id: '22', name: 'Pandas', imgsrc: '' },
-    { id: '23', name: 'NumPy', imgsrc: '' },
+    { id: '16', name: 'VS Code', imgsrc: 'images/vscode.jpeg' },
+    { id: '19', name: 'scikit-learn', imgsrc: 'images/scikit-learn.png' },
+    { id: '21', name: 'TensorFlow', imgsrc: 'images/tenserflow.png' },
+    { id: '22', name: 'Pandas', imgsrc: 'images/pandas.png' },
+    { id: '23', name: 'NumPy', imgsrc: 'images/NumPy.webp' },
     { id: '24', name: 'Jupyter Notebooks', imgsrc: '' },
     // Testing
     { id: '30', name: 'React Testing Library', imgsrc: '' },
