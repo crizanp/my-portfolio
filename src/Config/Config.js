@@ -4,67 +4,36 @@ import { IoBrushOutline, IoPhonePortraitOutline } from 'react-icons/io5';
 export const SkillSet = [
     // Programming Languages
     { id: '1', name: 'Python', imgsrc: '' },
-    { id: '2', name: 'R', imgsrc: '' },
     { id: '3', name: 'JavaScript', imgsrc: 'images/javascript.png' },
-    { id: '4', name: 'Java', imgsrc: '' },
     { id: '5', name: 'C', imgsrc: 'images/C.png' },
     { id: '6', name: 'C++', imgsrc: 'images/C++.png' },
-    { id: '7', name: 'HTML', imgsrc: 'images/HTML5.png' },
-    { id: '8', name: 'CSS', imgsrc: 'images/CSS3.png' },
-
-    // Frameworks & Libraries
     { id: '9', name: 'Node.js', imgsrc: 'images/nodejs.png' },
     { id: '10', name: 'Express.js', imgsrc: 'images/express.png' },
-    { id: '11', name: 'Handlebars.js', imgsrc: '' },
-    { id: '12', name: 'Bootstrap', imgsrc: 'images/Bootstrap.png' },
-
     // Tools & Platforms
     { id: '13', name: 'Git', imgsrc: '' },
     { id: '14', name: 'GitHub', imgsrc: 'images/github.png' },
     { id: '15', name: 'MongoDB', imgsrc: 'images/mongodb.png' },
     { id: '16', name: 'VS Code', imgsrc: '' },
-    { id: '17', name: 'Postman', imgsrc: '' },
-    { id: '18', name: 'Notepad++', imgsrc: '' },
-
-    // Machine Learning Libraries
     { id: '19', name: 'scikit-learn', imgsrc: '' },
-    { id: '20', name: 'XGBoost', imgsrc: '' },
     { id: '21', name: 'TensorFlow', imgsrc: '' },
     { id: '22', name: 'Pandas', imgsrc: '' },
     { id: '23', name: 'NumPy', imgsrc: '' },
     { id: '24', name: 'Jupyter Notebooks', imgsrc: '' },
-
-    // AI Tools & Platforms
-    { id: '25', name: 'ChatGPT (prompt engineering)', imgsrc: '' },
-    { id: '26', name: 'AutoML (Google Cloud)', imgsrc: '' },
-    { id: '27', name: 'Perplexity AI', imgsrc: '' },
-
     // Testing
-    { id: '28', name: 'Jest', imgsrc: '' },
-    { id: '29', name: 'Playwright', imgsrc: '' },
     { id: '30', name: 'React Testing Library', imgsrc: '' },
 
     // Databases
     { id: '31', name: 'MongoDB', imgsrc: 'images/mongodb.png' },
     { id: '32', name: 'MySQL (basic)', imgsrc: 'images/mysql.png' },
-    { id: '33', name: 'MS Access', imgsrc: '' },
 
     // Operating Systems
     { id: '34', name: 'Linux (Ubuntu, Debian)', imgsrc: '' },
-    { id: '35', name: 'Windows', imgsrc: '' },
+    { id: '35', name: 'PostGreSQL', imgsrc: '' },
 
     // Cloud
     { id: '36', name: 'AWS', imgsrc: '' },
-    { id: '37', name: 'Google Cloud Platform (GCP)', imgsrc: '' },
-    { id: '38', name: 'Azure', imgsrc: '' },
-
-    // Architecture
-    { id: '39', name: 'Micro-Frontend (Module Federation)', imgsrc: '' },
-    { id: '40', name: 'Monorepo Management', imgsrc: '' },
 
     // Embedded OS / Hardware
-    { id: '41', name: 'Arduino', imgsrc: '' },
-    { id: '42', name: 'Raspberry Pi', imgsrc: '' },
 
     // Mathematical Foundations
     { id: '43', name: 'Calculus', imgsrc: '' },
@@ -75,9 +44,7 @@ export const SkillSet = [
     // Soft Skills
     { id: '47', name: 'Problem Solving', imgsrc: '' },
     { id: '48', name: 'Analytical Thinking', imgsrc: '' },
-    { id: '49', name: 'Team Collaboration', imgsrc: '' },
     { id: '50', name: 'Documentation', imgsrc: '' },
-    { id: '51', name: 'Self-Learning', imgsrc: '' },
     { id: '52', name: 'Mentorship', imgsrc: '' },
 ];
 

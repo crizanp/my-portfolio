@@ -1,0 +1,93 @@
+import { AppProvider, useGlobalContext } from '../src/Context'
+import { ThemeProvider } from 'styled-components'
+import { GlobalStyle } from '../src/GlobalStyle/Globalstyle'
+import '../src/index.css'
+import 'aos/dist/aos.css'
+import React from 'react'
+
+const lightTheme = {
+  colors: {
+    black: '#000',
+    white: '#fff',
+    fandango: '#C13584',
+    chambreyblue: '#3a559f',
+    gold: 'gold',
+    darkgrey: '#323232',
+    grey: '#999999',
+    lightgrey: '#cccccc',
+    varylightgrey: ' #eeeeee',
+    deepskyblue: '#00BFFF',
+  },
+  bg: { primary: '#fff' },
+  highlight: {
+    primary: '#1523f3ff',
+    secondary: '#cccccc',
+    rgb: { primary: '120, 204, 109', secondary: '204, 204, 204' },
+  },
+  title: { primary: '0,0,0', secondary: '50, 50, 50' },
+  icon: { primary: '#fff' },
+  gradient: {
+    bgGradient: 'linear-gradient(to bottom right, #50a3a2 0%, #1523f3ff 100%)',
+    gradient1: 'linear-gradient(135deg,  rgba(120, 204, 109, 0.4) 0%,  rgba(120, 204, 109, 0.012) 100%)',
+    gradient2: 'radial-gradient(ellipse at left,  #dddddd 0%,  rgba(255, 255, 255, 0) 70%)',
+  },
+  border: {
+    gradient1: 'radial-gradient(ellipse at center,  #dddddd 0%,  rgba(255, 255, 255, 0) 70%)',
+    gradient2: 'radial-gradient(ellipse at left,  #dddddd 0%,  rgba(255, 255, 255, 0) 70%)',
+  },
+}
+
+const darkTheme = {
+  colors: {
+    black: '#000',
+    white: '#fff',
+    fandango: '#C13584',
+    chambreyblue: '#3a559f',
+    gold: 'gold',
+    darkgrey: '#323232',
+    grey: '#999999',
+    lightgrey: '#cccccc',
+    varylightgrey: ' #eeeeee',
+    deepskyblue: '#00BFFF',
+  },
+  bg: { primary: '#31313a' },
+  highlight: {
+    primary: '#ff9800',
+    secondary: 'rgb(102, 102, 102)',
+    rgb: { primary: '255, 152, 0', secondary: '102, 102, 102' },
+  },
+  title: { primary: '255, 255, 255', secondary: '153, 153, 153' },
+  icon: { primary: '#323232' },
+  gradient: {
+    bgGradient: 'linear-gradient(to bottom right, #17171b 0%, #28282f 100%)',
+    gradient1: 'linear-gradient(to bottom right, #17171b 0%, #28282f 100%)',
+    gradient2: 'radial-gradient(ellipse at left,  #dddddd 0%,  rgba(255, 255, 255, 0) 70%)',
+  },
+  border: {
+    gradient1: 'radial-gradient(ellipse at top,rgba(197, 202, 213, 0.15) 0%, rgba(255, 255, 255, 0) 70%)',
+    gradient2: 'radial-gradient(at left center, rgba(197, 202, 213, 0.15) 0%, rgba(255, 255, 255, 0) 70%);',
+  },
+}
+
+function ThemeWrapper({ children }) {
+  const { isdarkMode } = useGlobalContext()
+  const theme = isdarkMode ? darkTheme : lightTheme
+  return (
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      {children}
+    </ThemeProvider>
+  )
+}
+
+function MyApp({ Component, pageProps }) {
+  return (
+    <AppProvider>
+      <ThemeWrapper>
+        <Component {...pageProps} />
+      </ThemeWrapper>
+    </AppProvider>
+  )
+}
+
+export default MyApp
