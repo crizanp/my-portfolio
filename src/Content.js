@@ -12,6 +12,8 @@ import Contact from "./Pages/Contact";
 import Header from "./Components/Header";
 import Login from "./Pages/Login";
 import Private from "./Pages/Private";
+import Tools from "./Pages/Tools";
+import ToolDetail from "./Pages/ToolDetail";
 
 
 AOS.init({
@@ -38,6 +40,8 @@ const Content = () =>{
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/private" element={<Private />} />
+                <Route path="/tools" element={<Tools />} />
+                <Route path="/tools/:id" element={<ToolDetail />} />
               </Route>
             </Route>
             <Route path="*" element={<ErrorPage />} />

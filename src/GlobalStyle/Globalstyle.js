@@ -694,6 +694,103 @@ a:hover {
   }
 }
 
+/* tool card styling used on Tools page */
+.tool-card {
+  display: block;
+  padding: 16px;
+  background: #f4ecff;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+}
+
+@media (min-width: 760px) {
+  .category-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .category-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+/* subtool grid used on ToolDetail - 2 columns desktop, 1 on mobile */
+.subtool-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+@media (max-width: 760px) {
+  .subtool-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* tools page header styling */
+.tools-header {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0 auto 6px auto;
+  text-align: center;
+  color: rgb(${({ theme }) => theme.title.primary});
+  letter-spacing: 0.2px;
+  max-width: 900px;
+}
+.tools-subtitle {
+  font-size: 0.98rem;
+  color: rgba(0,0,0,0.55);
+  margin: 0 auto 18px auto;
+  text-align: center;
+  max-width: 820px;
+  line-height: 1.5;
+  opacity: 0.95;
+}
+.tool-card {
+  display: block;
+  padding: 16px;
+  background: #f4ecff;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  position: relative;
+  overflow: visible; /* allow badge to sit outside without clipping */
+}
+.tool-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+.tool-card div { /* increase spacing inside cards */
+  line-height: 1.45;
+}
+
+.tool-card-sub {
+  font-size: 12px;
+  color: rgba(0,0,0,0.65); /* dark tone */
+  margin-top: 8px;
+  text-align: left;
+}
+
+.featured-badge {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: rgba(255,255,255,0.95);
+  color: #ffd166;
+  padding: 4px 6px;
+  border-radius: 6px;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  font-size: 0.85rem;
+  z-index: 60;
+  transform: none !important;
+}
+
 /* On small screens remove the left offset applied by .hide-profile so
    the main card takes the full width (hide the 72px gap only on mobile) */
 @media (max-width: 560px) {

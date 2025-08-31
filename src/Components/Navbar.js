@@ -79,6 +79,14 @@ function Navbar() {
               </NavLink>
             </li>
             <li>
+              <NavLink className="nav-link link" to="/tools" onClick={() => setSidebar(false)}>
+                <span className="icon">
+                  <IoMdListBox />
+                </span>
+                <span className="link">Tools</span>
+              </NavLink>
+            </li>
+            <li>
               <NavLink className="nav-link link" to="/contact" onClick={() => setSidebar(false)}>
                 <span className="icon">
                   <FaPhoneAlt />
