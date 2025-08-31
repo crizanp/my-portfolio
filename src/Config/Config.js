@@ -49,17 +49,12 @@ export const SkillSet = [
 ];
 
 export const ProjImg = [
-    { id: '1', name: 'Bhagavad Gita', category: 'react', imgsrc: 'projectImg/react/p_01.jpg', href: 'https://bhagavad-gita-gyan.vercel.app/' },
-    { id: '2', name: 'NotePlus', category: 'react', imgsrc: 'projectImg/react/p_7.png', href: 'https://note-plus-react.vercel.app' },
-    { id: '3', name: 'Pokemon-app', category: 'react', imgsrc: 'projectImg/react/p_0.jpg', href: 'https://react-pokemon-app1.netlify.app/' },
-    { id: '4', name: 'Crypto-Tracker', category: 'react', imgsrc: 'projectImg/react/p_1.jpg', href: 'https://crypto-tracker1.netlify.app/' },
-    { id: '5', name: 'Weather-app', category: 'react', imgsrc: 'projectImg/react/p_2.jpg', href: 'https://weather-app-132.netlify.app/' },
-    { id: '6', name: 'Snake Game', category: 'javascript', imgsrc: 'projectImg/js/p_0.jpg', href: 'https://narendercoder.github.io/Snake-Game/' },
-    { id: '7', name: 'Spotify', category: 'javascript', imgsrc: 'projectImg/js/p_1.jpg', href: 'https://narendercoder.github.io/Spotify/' },
-    { id: '8', name: 'Todolist', category: 'react', imgsrc: 'projectImg/react/p_4.jpg', href: 'https://todolist82.netlify.app/' },
-    { id: '9', name: 'Tic-Tac-toe', category: 'javascript', imgsrc: 'projectImg/js/p_2.jpg', href: 'https://narendercoder.github.io/Tic_Tac_Toe/' },
-    { id: '10', name: 'E-talk', category: 'react', imgsrc: 'projectImg/react/p_5.png', href: 'https://e-talk.vercel.app/' },
-    { id: '11', name: 'E-commerce', category: 'react', imgsrc: 'projectImg/react/p_6.png', href: 'https://e-trade.netlify.app/' },
+    { id: '1', name: 'Digital Ecommerce', category: 'react', imgsrc: 'projectImg/react/digital-ecommerce.png', href: 'https://ecommercereactapp.vercel.app/' },
+    { id: '2', name: 'Tools Collection', category: 'react', imgsrc: 'projectImg/react/tool-collection.png', href: 'https://toobox-pro.vercel.app/' },
+    { id: '3', name: 'Creative Science Project', category: 'php', imgsrc: 'projectImg/react/creativescienceproject.png', href: 'https://github.com/crizanp/creative-science-project' },
+    { id: '4', name: 'Unicode Cnverter', category: 'node', imgsrc: 'projectImg/react/unicode.png', href: 'https://crijan-personal.vercel.app/translation' },
+    { id: '5', name: 'College website ', category: 'php', imgsrc: 'projectImg/react/fsu-portfolio.png', href: 'https://github.com/crizanp/college-website-corePHP' },
+    { id: '6', name: 'Notes and Documentation', category: 'php', imgsrc: 'projectImg/react/onlinelearnal.png', href: 'https://github.com/crizanp/onlinelearnal_fullstack-php' },
 ];
 
 export const Experience = [

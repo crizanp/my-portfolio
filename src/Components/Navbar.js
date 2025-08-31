@@ -71,6 +71,14 @@ function Navbar() {
               </NavLink>
             </li>
             <li>
+              <NavLink className="nav-link link" to="/private" onClick={() => setSidebar(false)}>
+                <span className="icon">
+                  <IoIosBrush />
+                </span>
+                <span className="link">Private</span>
+              </NavLink>
+            </li>
+            <li>
               <NavLink className="nav-link link" to="/contact" onClick={() => setSidebar(false)}>
                 <span className="icon">
                   <FaPhoneAlt />
