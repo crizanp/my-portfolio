@@ -5,8 +5,8 @@ const subtools = {
   'pdf-converter': ['Image to PDF','PDF to Images','Merge PDFs','Split PDF','Image Compressor'],
   'image-compress': ['Image Compressor','Image Cropper','HEIC Converter'],
   'video-tools': ['Video Converter','Video to Audio','Audio to Video'],
-  'text-secure': ['Text Encryption','Password Generator','Text to Speech'],
-  'file-secure': ['File Encryption','Password Generator'],
+  'text-secure': ['Text Encryption','Text Decryption'],
+  'file-secure': ['File Encryption','Image Encryption','Audio Encryption','Video Encryption','PDF Encryption'],
   'gif': ['GIF Converter'],
   'nepali-unicode': ['Nepali Unicode'],
   'image-tools': ['Image to PDF','Image Compressor','Image Cropper','SVG Converter','HEIC Converter'],
@@ -30,8 +30,15 @@ const ToolDetail = () => {
   }, []);
   return (
     <div className="content private">
-      <div className="tools-header">{(id||'').replace(/-/g,' ').toUpperCase()}</div>
-      <div className="tools-subtitle">Select a tool below to open the tool UI.</div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+        <div style={{ flex: 1 }}>
+          <div className="tools-header">{(id||'').replace(/-/g,' ').toUpperCase()}</div>
+          <div className="tools-subtitle">Select a tool below to open the tool UI.</div>
+        </div>
+        {id === 'text-secure' && (
+          <Link to="/tools/text-secure/text-decryption" style={{ padding: '8px 12px', background: '#0b76ef', color: '#fff', borderRadius: 8, textDecoration: 'none', fontWeight: 600 }}>Decrypt</Link>
+        )}
+      </div>
       <div className="subtool-grid" style={{ marginTop: 12 }}>
         {list.map(s => {
           const subSlug = s.toLowerCase().replace(/\s+/g, '-');

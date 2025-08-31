@@ -14,6 +14,9 @@ import Login from "./Pages/Login";
 import Private from "./Pages/Private";
 import Tools from "./Pages/Tools";
 import ToolDetail from "./Pages/ToolDetail";
+import ToolRunner from "./Pages/ToolRunner";
+import TextEncrypt from "./Pages/TextEncrypt";
+import TextDecrypt from "./Pages/TextDecrypt";
 
 
 AOS.init({
@@ -42,6 +45,7 @@ const Content = () =>{
                 <Route path="/private" element={<Private />} />
                 <Route path="/tools" element={<Tools />} />
                 <Route path="/tools/:id" element={<ToolDetail />} />
+                <Route path="/tools/:category/:subtool" element={<ToolRunner />} />
               </Route>
             </Route>
             <Route path="*" element={<ErrorPage />} />
