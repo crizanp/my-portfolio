@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ImUser } from "react-icons/im";
 import { FaPhoneAlt } from "react-icons/fa";
-import { AiOutlineBars, AiOutlineClose } from "react-icons/ai";
+import { AiOutlineBars, AiOutlineClose, AiOutlineLock } from "react-icons/ai";
 import { IoIosBrush, IoMdListBox } from "react-icons/io";
 import styled from "styled-components";
 
@@ -73,7 +73,7 @@ function Navbar() {
             <li>
               <NavLink className="nav-link link" to="/private" onClick={() => setSidebar(false)}>
                 <span className="icon">
-                  <IoIosBrush />
+                  <AiOutlineLock />
                 </span>
                 <span className="link">Private</span>
               </NavLink>

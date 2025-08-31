@@ -611,4 +611,39 @@ a:hover {
       content:unset;
   }
 }
+/* When the app has the class 'hide-profile' we hide the left profile card
+  and expand the main content (.card-inner) to take the full available area.
+  Private page will toggle this class when the user is authenticated. */
+.hide-profile .card-section {
+  display: none !important;
+}
+.hide-profile .card-inner {
+  left: 72px !important; /* leave space for the left navbar */
+  right: 0 !important;
+  width: auto !important;
+  border-radius: 4px !important;
+}
+
+/* Private page category row and grid */
+.category-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+.private-grid {
+  max-height: calc(100vh - 320px);
+  overflow-y: auto;
+  padding-right: 8px;
+  margin-top: 12px;
+}
+
+@media (max-width: 760px) {
+  .category-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .private-grid {
+    max-height: calc(100vh - 360px);
+  }
+}
 `
