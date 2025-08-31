@@ -513,9 +513,10 @@ col {
 
 @media (max-width: 1199px) {
   .app {
-    height: auto;
-    display: block;
-    overflow: hidden;
+  height: auto;
+  display: block;
+  /* allow vertical scrolling on small devices */
+  overflow: auto;
   }
 }
 
@@ -552,6 +553,33 @@ col {
     .card-wrap {
       height: auto;
     }
+  }
+}
+
+/* mobile-specific: make inner card and wrap fully scrollable */
+@media (max-width: 560px) {
+  .app {
+    overflow: auto !important;
+    height: auto !important;
+  }
+  .card-inner {
+    position: relative !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    border-radius: 0 0 4px 0 !important;
+  }
+  .card-inner .card-wrap {
+    height: auto !important;
+    max-height: none !important;
+    overflow: auto !important;
+  }
+  /* allow the private grid to scroll independently if needed */
+  .private-grid {
+    max-height: calc(100vh - 240px) !important;
+    overflow-y: auto !important;
   }
 }
 
@@ -638,12 +666,43 @@ a:hover {
   margin-top: 12px;
 }
 
+/* default: 3 columns on desktop */
+.private-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* mobile: 1 column */
+@media (max-width: 560px) {
+  .private-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding-right: 0;
+  }
+  .private-grid > div {
+    padding: 12px !important;
+  }
+}
+
 @media (max-width: 760px) {
   .category-row {
     grid-template-columns: repeat(3, 1fr);
   }
   .private-grid {
     max-height: calc(100vh - 360px);
+  }
+}
+
+/* On small screens remove the left offset applied by .hide-profile so
+   the main card takes the full width (hide the 72px gap only on mobile) */
+@media (max-width: 560px) {
+  .hide-profile .card-inner {
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    border-radius: 4px !important;
+    margin: 0 0 10px 0 !important;
   }
 }
 `

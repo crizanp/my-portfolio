@@ -125,6 +125,7 @@ export default function Private() {
   // category filter
   const categories = ['all','password','base64','note','photo','doc','file','imp-photo'];
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const gridRef = React.useRef(null);
 
   return (
     <div className="card-inner">
@@ -168,7 +169,7 @@ export default function Private() {
               </div>
 
               {showNew && (
-                <div style={{ marginTop: 12, padding: 12, background: '#fff', borderRadius: 8 }}>
+                <div style={{ marginTop: 12, padding: 12, background: '#f4ecff', borderRadius: 8 }}>
                   <div style={{ marginBottom: 8 }}>
                     <label>Type</label>
                     <select value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} style={{ width: '100%', padding: 8, marginTop: 4 }}>{['password','base64','note','photo','doc','file','imp-photo'].map(t => <option key={t} value={t}>{t}</option>)}</select>
@@ -211,16 +212,16 @@ export default function Private() {
 
               {loading && <div style={{ marginTop: 12 }}>Loading private items...</div>}
               {/* category buttons */}
-              <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              <div className="category-row">
                 {categories.map(c => (
-                  <button key={c} onClick={() => setSelectedCategory(c)} style={{ padding: '6px 10px', borderRadius: 6, border: selectedCategory === c ? '1px solid #0b76ef' : '1px solid #ddd', background: selectedCategory === c ? '#eaf3ff' : '#fff' }}>{c === 'all' ? 'All' : c}</button>
+                  <button key={c} onClick={() => setSelectedCategory(c)} style={{ padding: '10px 12px', borderRadius: 6, border: selectedCategory === c ? '1px solid #0b76ef' : '1px solid #ddd', background: selectedCategory === c ? '#eaf3ff' : '#fff' }}>{c === 'all' ? 'All' : c}</button>
                 ))}
               </div>
 
               {items && (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px,1fr))', gap: 16, marginTop: 12 }}>
+                <div ref={gridRef} className="private-grid">
                   {items.filter(it => selectedCategory === 'all' ? true : it.type === selectedCategory).map((it, i) => (
-                    <div key={it._id || i} onClick={() => setDetailItem(it)} style={{ borderRadius: 8, padding: 12, background: '#fff', boxShadow: '0 6px 18px rgba(0,0,0,0.06)', position: 'relative', cursor: 'pointer' }}>
+                    <div key={it._id || i} onClick={() => setDetailItem(it)} style={{ borderRadius: 8, padding: 12, background: '#f4ecff', boxShadow: '0 6px 18px rgba(0,0,0,0.06)', position: 'relative', cursor: 'pointer' }}>
                       <div style={{ position: 'absolute', right: 8, top: 8, display: 'flex', gap: 6 }}>
                         <button onClick={(e) => { e.stopPropagation();
                           setEditingId(it._id);
@@ -254,7 +255,7 @@ export default function Private() {
               {/* detail modal */}
               {detailItem && (
                 <div role="dialog" onClick={() => setDetailItem(null)} style={{ position: 'fixed', left: 0, top: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
-                  <div onClick={e => e.stopPropagation()} style={{ background: '#fff', padding: 20, borderRadius: 8, maxWidth: 720, width: '90%' }}>
+                  <div onClick={e => e.stopPropagation()} style={{ background: '#f9f5ff', padding: 20, borderRadius: 8, maxWidth: 720, width: '90%' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <h3 style={{ margin: 0 }}>{detailItem.title}</h3>
                       <button onClick={() => setDetailItem(null)} style={{ ...styles.logout }}>Close</button>

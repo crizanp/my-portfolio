@@ -106,7 +106,15 @@ const Wrapper = styled.section`
     border-radius: 4px;
     float: left;
     transition: 0.5s all;
+     border: 1px solid rgba(0,0,0,0.18);
 
+
+  @media (max-width: 560px) {
+    .header {
+      border-right: none;
+      width: 56px;
+    }
+  }
     .menu-btn {
       margin-bottom: 8px;
       position: relative;
