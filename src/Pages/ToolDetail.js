@@ -35,9 +35,7 @@ const ToolDetail = () => {
           <div className="tools-header">{(id||'').replace(/-/g,' ').toUpperCase()}</div>
           <div className="tools-subtitle">Select a tool below to open the tool UI.</div>
         </div>
-        {id === 'text-secure' && (
-          <Link to="/tools/text-secure/text-decryption" style={{ padding: '8px 12px', background: '#0b76ef', color: '#fff', borderRadius: 8, textDecoration: 'none', fontWeight: 600 }}>Decrypt</Link>
-        )}
+       
       </div>
       <div className="subtool-grid" style={{ marginTop: 12 }}>
         {list.map(s => {

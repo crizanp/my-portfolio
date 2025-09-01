@@ -5,7 +5,7 @@ function Preloader() {
 
   return (
     <Wrapper className='preloader'>
-       <img src="preloader/ripple.svg" alt="preloader"/>
+       <img src="/preloader/ripple.svg" alt="preloader" style={{ width: 120, height: 120, display: 'block' }} />
     </Wrapper>
   )
 }

@@ -7,6 +7,7 @@ export default function TextEncryption() {
     const [result, setResult] = useState('');
     const [error, setError] = useState('');
     const [showPass, setShowPass] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const appRoot = document.getElementById('app-root');
@@ -48,7 +49,10 @@ export default function TextEncryption() {
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
                         <div style={{ flex: 1 }}>
                             <div className="title"><span className="first-word">Text </span>Encryption</div>
-                            <div style={{ marginTop: 10, color: '#555' }}>Enter text and a passphrase. The encrypted string will be produced using CryptoJS AES (passphrase-based).</div>
+                            <div style={{ marginTop: 10, color: '#555', display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'nowrap' }}>
+                                <div style={{ whiteSpace: 'nowrap', flex: '0 0 auto' }}>Enter text and a passphrase.</div>
+                                <button onClick={()=>setShowModal(true)} style={{ background: 'transparent', border: 'none', color: '#0b76ef', fontSize: 13, cursor: 'pointer', padding: 0 }}>What is this?</button>
+                            </div>
                         </div>
                         <div>
                             <button onClick={handleDecryptNavigate} style={{ padding: '8px 12px', background: '#0b76ef', color: '#fff', borderRadius: 8, border: 'none', fontWeight: 600 }}>Decrypt</button>
@@ -92,6 +96,26 @@ export default function TextEncryption() {
                         </div>
                     )}
 
+
+                    {/* modal */}
+                    {showModal && (
+                        <div role="dialog" aria-modal="true" style={{ position: 'fixed', left: 0, top: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }} onClick={()=>setShowModal(false)}>
+                            <div onClick={e=>e.stopPropagation()} style={{ background: '#fff', padding: 18, borderRadius: 8, maxWidth: 640, width: '90%', boxShadow: '0 10px 30px rgba(0,0,0,0.15)', position: 'relative', paddingTop: 36, textAlign: 'left' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <h3 style={{ margin: 0 }}>About this tool</h3>
+                                    <button onClick={()=>setShowModal(false)} aria-label="Close" style={{ position: 'absolute', right: 12, top: 12, width: 36, height: 36, border: 'none', background: 'transparent', fontSize: 18, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
+                                </div>
+                                <div style={{ marginTop: 12, color: '#333', lineHeight: 1.5 }}>
+                                    <p style={{ marginTop: 0 }}>This tool lets you encrypt small pieces of text in your browser using a passphrase. The text stays on your device and is not sent anywhere.</p>
+                                    <ul style={{ marginTop: 8 }}>
+                                        <li>Use a strong passphrase and keep it secret.</li>
+                                        <li>Save both the encrypted text and the passphrase — you need both to decrypt.</li>
+                                        <li>Best for short text only; not intended for large files.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

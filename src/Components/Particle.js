@@ -63,18 +63,7 @@ function Particle() {
             detectRetina: true,
           }}
         />
-      <ul className="bg-bubbles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
+     
     </Wrapper>
   );
 }

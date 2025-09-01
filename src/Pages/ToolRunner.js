@@ -2,6 +2,16 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import TextEncrypt from './Tools/TextEncryption';
 import TextDecrypt from './Tools/TextDecryption';
+import FileEncrypt from './Tools/FileEncryption';
+import FileDecrypt from './Tools/FileDecryption';
+import ImageEncrypt from './Tools/ImageEncryption';
+import ImageDecrypt from './Tools/ImageDecryption';
+import AudioEncrypt from './Tools/AudioEncryption';
+import AudioDecrypt from './Tools/AudioDecryption';
+import VideoEncrypt from './Tools/VideoEncryption';
+import VideoDecrypt from './Tools/VideoDecryption';
+import PdfEncrypt from './Tools/PdfEncryption';
+import PdfDecrypt from './Tools/PdfDecryption';
 
 export default function ToolRunner(){
   const { category, subtool } = useParams();
@@ -11,6 +21,19 @@ export default function ToolRunner(){
   if (category === 'text-secure') {
     if (slug === 'text-encryption' || slug === 'text-encrypt' || slug === 'text-encryption') return <TextEncrypt />;
     if (slug === 'text-decryption' || slug === 'text-decrypt') return <TextDecrypt />;
+  }
+
+  if (category === 'file-secure') {
+    if (slug === 'file-encryption' || slug === 'file-encrypt') return <FileEncrypt />;
+    if (slug === 'file-decryption' || slug === 'file-decrypt') return <FileDecrypt />;
+  if (slug === 'audio-encryption' || slug === 'audio-encrypt') return <AudioEncrypt />;
+  if (slug === 'audio-decryption' || slug === 'audio-decrypt') return <AudioDecrypt />;
+  if (slug === 'image-encryption' || slug === 'image-encrypt') return <ImageEncrypt />;
+  if (slug === 'image-decryption' || slug === 'image-decrypt') return <ImageDecrypt />;
+  if (slug === 'video-encryption' || slug === 'video-encrypt') return <VideoEncrypt />;
+  if (slug === 'video-decryption' || slug === 'video-decrypt') return <VideoDecrypt />;
+  if (slug === 'pdf-encryption' || slug === 'pdf-encrypt') return <PdfEncrypt />;
+  if (slug === 'pdf-decryption' || slug === 'pdf-decrypt') return <PdfDecrypt />;
   }
 
   // fallback: simple message
