@@ -13,6 +13,7 @@ import VideoEncrypt from './Tools/VideoEncryption';
 import VideoDecrypt from './Tools/VideoDecryption';
 import PdfEncrypt from './Tools/PdfEncryption';
 import PdfDecrypt from './Tools/PdfDecryption';
+import TranslationPage from './TranslationPage';
 
 export default function ToolRunner(){
   const { category, subtool } = useParams();
@@ -27,6 +28,14 @@ export default function ToolRunner(){
   if (category === 'text-secure') {
     if (slug === 'text-encryption' || slug === 'text-encrypt' || slug === 'text-encryption') return <TextEncrypt />;
     if (slug === 'text-decryption' || slug === 'text-decrypt') return <TextDecrypt />;
+  }
+
+  if (category === 'translate') {
+    if (slug === 'unicode' || slug === 'translate-unicode' || slug === 'translate') return <TranslationPage />;
+  }
+  // legacy or alternate route for Nepali Unicode tool
+  if (category === 'nepali-unicode') {
+    if (slug === 'nepali-unicode' || slug === 'unicode' || slug === 'nepali') return <TranslationPage />;
   }
 
   if (category === 'file-secure') {
