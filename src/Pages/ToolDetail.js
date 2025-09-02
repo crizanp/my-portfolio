@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 
 const subtools = {
   'pdf-converter': ['Image to PDF','PDF to Images','Merge PDFs','Split PDF','Image Compressor'],
-  'image-compress': ['Image Compressor','Image Cropper','HEIC Converter'],
+  'image-compress': ['Image Compressor'],
   'video-tools': ['Video Converter','Video to Audio','Audio to Video'],
   'text-secure': ['Text Encryption','Text Decryption'],
   'file-secure': ['File Encryption','Image Encryption','Audio Encryption','Video Encryption','PDF Encryption'],

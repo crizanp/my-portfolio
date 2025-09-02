@@ -6,6 +6,7 @@ import FileEncrypt from './Tools/FileEncryption';
 import FileDecrypt from './Tools/FileDecryption';
 import ImageEncrypt from './Tools/ImageEncryption';
 import ImageDecrypt from './Tools/ImageDecryption';
+import ImageCompression from './Tools/ImageCompression';
 import AudioEncrypt from './Tools/AudioEncryption';
 import AudioDecrypt from './Tools/AudioDecryption';
 import VideoEncrypt from './Tools/VideoEncryption';
@@ -16,6 +17,11 @@ import PdfDecrypt from './Tools/PdfDecryption';
 export default function ToolRunner(){
   const { category, subtool } = useParams();
   const slug = decodeURIComponent(subtool || '').toLowerCase();
+
+  // legacy/alternate single-tool routes
+  if (category === 'image-compress') {
+    if (slug === 'image-compressor' || slug === 'image-compress') return <ImageCompression />;
+  }
 
   // map a few known slugs to components
   if (category === 'text-secure') {
@@ -30,6 +36,7 @@ export default function ToolRunner(){
   if (slug === 'audio-decryption' || slug === 'audio-decrypt') return <AudioDecrypt />;
   if (slug === 'image-encryption' || slug === 'image-encrypt') return <ImageEncrypt />;
   if (slug === 'image-decryption' || slug === 'image-decrypt') return <ImageDecrypt />;
+  if (slug === 'image-compression' || slug === 'image-compress') return <ImageCompression />;
   if (slug === 'video-encryption' || slug === 'video-encrypt') return <VideoEncrypt />;
   if (slug === 'video-decryption' || slug === 'video-decrypt') return <VideoDecrypt />;
   if (slug === 'pdf-encryption' || slug === 'pdf-encrypt') return <PdfEncrypt />;
