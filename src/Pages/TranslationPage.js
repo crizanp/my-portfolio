@@ -53,6 +53,9 @@ export default function TranslationPage(){
   const [roman, setRoman] = useState('');
   const [unicode, setUnicode] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const [didYouMean, setDidYouMean] = useState([]);
+  const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState('');
   const [sanscript, setSanscript] = useState(null);
@@ -181,10 +184,27 @@ export default function TranslationPage(){
     setRoman(v);
     setUnicode(transliterate(v));
 
-    // suggestions for last word
+    // If the user just typed a space, close suggestions and show "Do you mean this?" matches
+    const endedWithSpace = /\s$/.test(v);
+    if (endedWithSpace) {
+      // find the token before the trailing space
+      const before = v.slice(0, -1).trim();
+      const prev = before.split(/\s+/).pop()?.toLowerCase().replace(/[()]/g,'') || '';
+      if (prev) {
+        const matches = trie.current.search(prev).slice(0,2);
+        setDidYouMean(matches);
+      } else {
+        setDidYouMean([]);
+      }
+      setSuggestions([]);
+      return;
+    }
+
+    // normal behavior: show suggestions for last word
+    setDidYouMean([]);
     const parts = v.trim().split(/\s+/);
     const last = parts[parts.length-1]?.toLowerCase().replace(/[()]/g,'') || '';
-  if(last) setSuggestions(trie.current.search(last).slice(0,16));
+    if(last) setSuggestions(trie.current.search(last).slice(0,16));
     else setSuggestions([]);
   },[transliterate]);
 
@@ -194,13 +214,42 @@ export default function TranslationPage(){
     const newRoman = parts.join(' ') + ' ';
     setRoman(newRoman);
     setUnicode(transliterate(newRoman));
+  setSuggestions([]);
+  setDidYouMean([]);
+    inputRef.current?.focus();
+  };
+
+  const applyDidYouMean = (sug) => {
+    // Replace the previous word (the one before the space) with the chosen suggestion
+    const trimmed = roman.replace(/\s+$/,'');
+    const parts = trimmed.split(/\s+/);
+    if (parts.length === 0) return;
+    parts[parts.length-1] = sug;
+    const newRoman = parts.join(' ') + ' ';
+    setRoman(newRoman);
+    setUnicode(transliterate(newRoman));
+    setDidYouMean([]);
     setSuggestions([]);
     inputRef.current?.focus();
   };
 
   const handleCopy = async ()=>{
-    try{ await navigator.clipboard.writeText(unicode); setError('Copied to clipboard'); setTimeout(()=>setError(''),2000);}catch(e){ setError('Copy failed'); }
+    try{
+      await navigator.clipboard.writeText(unicode);
+      setCopied(true);
+      setError('Copied to clipboard');
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(()=>{
+        setCopied(false);
+        setError('');
+        copyTimeoutRef.current = null;
+      }, 2000);
+    }catch(e){ setError('Copy failed'); setTimeout(()=>setError(''),2000); }
   };
+
+  useEffect(()=>{
+    return ()=>{ if(copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current); };
+  },[]);
 
   const handleClear = ()=>{ setRoman(''); setUnicode(''); setSuggestions([]); setError(''); };
 
@@ -230,30 +279,40 @@ export default function TranslationPage(){
           <div style={{ marginTop: 14 }}>
             <label>Romanized Input</label>
             <textarea ref={inputRef} value={roman} onChange={handleChange} placeholder="kasto chha malaai khana chha..." style={{ width: '100%', minHeight: 120, padding: 12, marginTop: 8, border: '1px solid #e6e9ee', borderRadius: 8, background: '#fff', boxSizing: 'border-box' }} />
-            {suggestions.length > 0 && (
-              <div style={{ marginTop: 8, display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'flex-start' }}>
-                {suggestions.map((s,i)=> (
-                  <button
-                    key={i}
-                    onClick={()=>applySuggestion(s)}
-                    style={{
-                      padding: '6px 10px',
-                      borderRadius: 8,
-                      border: '1px solid #ddd',
-                      background: '#fafafa',
-                      cursor: 'pointer',
-                      // let button size to content but cap width to ~1/8 of container
-                      maxWidth: 'calc((100% - 56px) / 8)',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      flex: '0 1 auto'
-                    }}
-                  >
-                    {s}
-                  </button>
-                ))}
+            {didYouMean.length > 0 ? (
+              <div style={{ marginTop: 8 }}>
+                <div style={{ marginBottom: 6, color: '#555', fontSize: 13 }}>Do you mean this?</div>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  {didYouMean.map((s,i)=> (
+                    <button key={i} onClick={()=>applyDidYouMean(s)} style={{ padding: '6px 10px', borderRadius: 8, border: '1px solid #ddd', background: '#fff', cursor: 'pointer' }}>{s}</button>
+                  ))}
+                </div>
               </div>
+            ) : (
+              suggestions.length > 0 && (
+                <div style={{ marginTop: 8, display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'flex-start' }}>
+                  {suggestions.map((s,i)=> (
+                    <button
+                      key={i}
+                      onClick={()=>applySuggestion(s)}
+                      style={{
+                        padding: '6px 10px',
+                        borderRadius: 8,
+                        border: '1px solid #ddd',
+                        background: '#fafafa',
+                        cursor: 'pointer',
+                        maxWidth: 'calc((100% - 56px) / 8)',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        flex: '0 1 auto'
+                      }}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              )
             )}
           </div>
 
@@ -263,27 +322,44 @@ export default function TranslationPage(){
           </div>
 
           <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
-            <button onClick={handleCopy} style={{ padding: '10px 14px', background: '#6a2bff', color: '#fff', border: 'none', borderRadius: 8 }}>Copy</button>
+            <button onClick={handleCopy} style={{ padding: '10px 14px', background: '#6a2bff', color: '#fff', border: 'none', borderRadius: 8 }}>{copied ? 'Copied' : 'Copy'}</button>
             <button onClick={handleClear} style={{ padding: '10px 14px', borderRadius: 8, border: '1px solid #ddd' }}>Clear</button>
           </div>
 
           {error && <div style={{ marginTop: 12, color: '#8a0f0f' }}>{error}</div>}
 
           {showModal && (
-            <div role="dialog" aria-modal="true" style={{ position: 'fixed', left: 0, top: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }} onClick={()=>setShowModal(false)}>
-              <div onClick={e=>e.stopPropagation()} style={{ background: '#fff', padding: 18, borderRadius: 8, maxWidth: 640, width: '90%', boxShadow: '0 10px 30px rgba(0,0,0,0.15)', position: 'relative', paddingTop: 36, textAlign: 'left' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <h3 style={{ margin: 0 }}>About this tool</h3>
-                  <button onClick={()=>setShowModal(false)} aria-label="Close" style={{ position: 'absolute', right: 12, top: 12, width: 36, height: 36, border: 'none', background: 'transparent', fontSize: 18, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
+            <div role="dialog" aria-modal="true" style={{ position: 'fixed', left: 0, top: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }} onClick={()=>setShowModal(false)}>
+              <div onClick={e=>e.stopPropagation()} style={{ background: '#fff', padding: 20, borderRadius: 12, maxWidth: 720, width: '92%', boxShadow: '0 12px 36px rgba(0,0,0,0.18)', position: 'relative', textAlign: 'left', display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+                <div style={{ flex: '1 1 320px', minWidth: 260 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <div style={{ width: 44, height: 44, borderRadius: 10, background: '#0b76ef', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700 }}>ने</div>
+                    <div>
+                      <h3 style={{ margin: 0, fontSize: 18 }}>What is Nepali Unicode?</h3>
+                      <div style={{ color: '#666', fontSize: 13, marginTop: 6 }}>Quick guide to Roman → Devanagari conversion</div>
+                    </div>
+                  </div>
+
+                  <div style={{ marginTop: 14, color: '#333', lineHeight: 1.5, fontSize: 14 }}>
+                    <p style={{ margin: '0 0 8px 0' }}>Type Romanized Nepali (itrans-style or simple phonetic) and this tool converts it to Unicode Devanagari on the fly. Text inside parentheses is preserved as-is.</p>
+                    <p style={{ margin: '0 0 8px 0' }}>Suggestions appear while typing — click to accept. When you press space, the tool offers a small "Do you mean this?" hint with top matches.</p>
+                  </div>
+
+                  <div style={{ marginTop: 16, display: 'flex', gap: 8 }}>
+                    <button onClick={()=>setShowModal(false)} style={{ padding: '10px 14px', background: '#0b76ef', color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer' }}>Got it</button>
+                  </div>
                 </div>
-                <div style={{ marginTop: 12, color: '#333', lineHeight: 1.5 }}>
-                  <p style={{ marginTop: 0 }}>Type Romanized Nepali (itrans style) and this tool will convert it to Unicode Devanagari in real-time. Text inside parentheses is preserved.</p>
-                  <ul style={{ marginTop: 8 }}>
-                    <li>Use simple romanized words like <strong>kasto</strong> &rarr; <em>कस्तो</em>.</li>
-                    <li>Click suggestions to replace the last word and improve accuracy.</li>
-                    <li>This conversion runs entirely in your browser.</li>
-                  </ul>
+
+                <div style={{ flex: '0 1 260px', minWidth: 220, background: '#fafafa', borderRadius: 8, padding: 12, alignSelf: 'stretch' }}>
+                  <div style={{ fontSize: 13, color: '#444', marginBottom: 8, fontWeight: 600 }}>Examples</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    <div style={{ fontSize: 14 }}><strong>kasto</strong> → <span style={{ fontFamily: 'Noto Sans Devanagari, serif' }}>कस्तो</span></div>
+                    <div style={{ fontSize: 14 }}><strong>malaai khana</strong> → <span style={{ fontFamily: 'Noto Sans Devanagari, serif' }}>मलाई खाना</span></div>
+                    <div style={{ fontSize: 14 }}><strong>paani</strong> → <span style={{ fontFamily: 'Noto Sans Devanagari, serif' }}>पानी</span></div>
+                  </div>
                 </div>
+
+                <button onClick={()=>setShowModal(false)} aria-label="Close" style={{ position: 'absolute', right: 12, top: 12, width: 36, height: 36, border: 'none', background: 'transparent', fontSize: 18, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
               </div>
             </div>
           )}
