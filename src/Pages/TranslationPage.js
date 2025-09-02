@@ -318,7 +318,7 @@ export default function TranslationPage(){
 
           <div style={{ marginTop: 12 }}>
             <label>Nepali Unicode Output</label>
-            <textarea readOnly value={unicode} style={{ width: '100%', minHeight: 120, padding: 12, marginTop: 8, border: '1px solid #e6e9ee', borderRadius: 8, background: '#fff', boxSizing: 'border-box' }} />
+            <textarea readOnly value={unicode} style={{ width: '100%', minHeight: 120, padding: 12, marginTop: 8, border: '1px solid #e6ddff', borderRadius: 8, background: '#f3f0ff', boxSizing: 'border-box' }} />
           </div>
 
           <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>

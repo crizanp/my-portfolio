@@ -138,7 +138,7 @@ export default function Private() {
 
           {!token && (
             <div>
-              <div style={styles.infoBox}>This section is private. Enter your credentials to continue.</div>
+              <div style={styles.infoBox}>This section is private. Acess is granted for my boss Srijan only :)</div>
               <form onSubmit={submitLogin}>
                 <div style={styles.formRow}>
                   <label>Username</label>

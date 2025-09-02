@@ -7,6 +7,7 @@ import FileDecrypt from './Tools/FileDecryption';
 import ImageEncrypt from './Tools/ImageEncryption';
 import ImageDecrypt from './Tools/ImageDecryption';
 import ImageCompression from './Tools/ImageCompression';
+import ImageToPdf from './Tools/ImageToPdf';
 import AudioEncrypt from './Tools/AudioEncryption';
 import AudioDecrypt from './Tools/AudioDecryption';
 import VideoEncrypt from './Tools/VideoEncryption';
@@ -38,6 +39,10 @@ export default function ToolRunner(){
     if (slug === 'nepali-unicode' || slug === 'unicode' || slug === 'nepali') return <TranslationPage />;
   }
 
+  if (category === 'pdf-converter') {
+    if (slug === 'image-to-pdf' || slug === 'image-pdf') return <ImageToPdf />;
+  }
+
   if (category === 'file-secure') {
     if (slug === 'file-encryption' || slug === 'file-encrypt') return <FileEncrypt />;
     if (slug === 'file-decryption' || slug === 'file-decrypt') return <FileDecrypt />;
@@ -46,6 +51,7 @@ export default function ToolRunner(){
   if (slug === 'image-encryption' || slug === 'image-encrypt') return <ImageEncrypt />;
   if (slug === 'image-decryption' || slug === 'image-decrypt') return <ImageDecrypt />;
   if (slug === 'image-compression' || slug === 'image-compress') return <ImageCompression />;
+  if (slug === 'image-to-pdf' || slug === 'image-pdf') return <ImageToPdf />;
   if (slug === 'video-encryption' || slug === 'video-encrypt') return <VideoEncrypt />;
   if (slug === 'video-decryption' || slug === 'video-decrypt') return <VideoDecrypt />;
   if (slug === 'pdf-encryption' || slug === 'pdf-encrypt') return <PdfEncrypt />;
