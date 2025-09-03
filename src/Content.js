@@ -15,6 +15,8 @@ import Private from "./Pages/Private";
 import Tools from "./Pages/Tools";
 import ToolDetail from "./Pages/ToolDetail";
 import ToolRunner from "./Pages/ToolRunner";
+import AIModals from "./Pages/AIModals";
+import AIToolDetail from "./Pages/AIToolDetail";
 import TextEncrypt from "./Pages/TextEncrypt";
 import TextDecrypt from "./Pages/TextDecrypt";
 
@@ -46,6 +48,8 @@ const Content = () =>{
                 <Route path="/tools" element={<Tools />} />
                 <Route path="/tools/:id" element={<ToolDetail />} />
                 <Route path="/tools/:category/:subtool" element={<ToolRunner />} />
+                <Route path="/ai" element={<AIModals />} />
+                <Route path="/ai/:id" element={<AIToolDetail />} />
               </Route>
             </Route>
             <Route path="*" element={<ErrorPage />} />

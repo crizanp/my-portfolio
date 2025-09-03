@@ -87,6 +87,14 @@ function Navbar() {
               </NavLink>
             </li>
             <li>
+              <NavLink className="nav-link link" to="/ai" onClick={() => setSidebar(false)}>
+                <span className="icon">
+                  <IoMdListBox />
+                </span>
+                <span className="link">AI</span>
+              </NavLink>
+            </li>
+            <li>
               <NavLink className="nav-link link" to="/contact" onClick={() => setSidebar(false)}>
                 <span className="icon">
                   <FaPhoneAlt />
@@ -114,7 +122,6 @@ const Wrapper = styled.section`
     border-radius: 4px;
     float: left;
     transition: 0.5s all;
-     border: 1px solid rgba(0,0,0,0.18);
 
 
   @media (max-width: 560px) {

@@ -89,7 +89,7 @@ span{
 
 .app {
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -128,9 +128,9 @@ span{
   top: 0;
   left: 0;
   width: 100%;
-  height: 84vh;
+  height: auto;
   max-width: 1243px;
-  max-height: 674px;
+  max-height: none;
   transition: all 0.4s ease 0s;
   padding-left: 0;
   padding-right: 0;

@@ -8,6 +8,7 @@ import ImageEncrypt from './Tools/ImageEncryption';
 import ImageDecrypt from './Tools/ImageDecryption';
 import ImageCompression from './Tools/ImageCompression';
 import ImageToPdf from './Tools/ImageToPdf';
+import PdfToImages from './Tools/PdfToImages';
 import AudioEncrypt from './Tools/AudioEncryption';
 import AudioDecrypt from './Tools/AudioDecryption';
 import VideoEncrypt from './Tools/VideoEncryption';
@@ -41,6 +42,7 @@ export default function ToolRunner(){
 
   if (category === 'pdf-converter') {
     if (slug === 'image-to-pdf' || slug === 'image-pdf') return <ImageToPdf />;
+  if (slug === 'pdf-to-images' || slug === 'pdf-images') return <PdfToImages />;
   }
 
   if (category === 'file-secure') {
