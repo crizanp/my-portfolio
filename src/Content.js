@@ -17,6 +17,7 @@ import ToolDetail from "./Pages/ToolDetail";
 import ToolRunner from "./Pages/ToolRunner";
 import AIModals from "./Pages/AIModals";
 import AIToolDetail from "./Pages/AIToolDetail";
+import ExamTimerPrep from "./Pages/ai-project/exam-timer-and-preperation-tracker";
 import TextEncrypt from "./Pages/TextEncrypt";
 import TextDecrypt from "./Pages/TextDecrypt";
 
@@ -49,6 +50,7 @@ const Content = () =>{
                 <Route path="/tools/:id" element={<ToolDetail />} />
                 <Route path="/tools/:category/:subtool" element={<ToolRunner />} />
                 <Route path="/ai" element={<AIModals />} />
+                <Route path="/ai/exam-timer-and-preperation-tracker" element={<ExamTimerPrep />} />
                 <Route path="/ai/:id" element={<AIToolDetail />} />
               </Route>
             </Route>
