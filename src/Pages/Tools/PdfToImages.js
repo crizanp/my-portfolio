@@ -397,11 +397,7 @@ export default function PdfToImages() {
                                 <div style={{ fontSize: 12, color: '#666', marginTop: 2 }}>
                                     {(selectedPdf.size / (1024 * 1024)).toFixed(2)} MB
                                     {pageCount > 0 && ` • ${pageCount} page${pageCount !== 1 ? 's' : ''}`}
-                                    {selectedPdf.size > 50 * 1024 * 1024 && (
-                                        <span style={{ color: '#f59e0b', marginLeft: 8 }}>
-                                            ⚠️ Large file - processing may take time
-                                        </span>
-                                    )}
+                                   
                                 </div>
                             </div>
                             <button 
@@ -474,7 +470,7 @@ export default function PdfToImages() {
                     )}
 
                     {/* Large file processing notice */}
-                    {selectedPdf && selectedPdf.size > 100 * 1024 * 1024 && (
+                    {/* {selectedPdf && selectedPdf.size > 100 * 1024 * 1024 && (
                         <div style={{ marginTop: 12, padding: 12, background: '#fff3cd', border: '1px solid #ffeaa7', borderRadius: 6, fontSize: 13 }}>
                             <div style={{ fontWeight: 500, color: '#856404', marginBottom: 4 }}>Large File Processing</div>
                             <div style={{ color: '#856404' }}>
@@ -484,7 +480,7 @@ export default function PdfToImages() {
                                 • Large files are processed in optimized batches to prevent memory issues
                             </div>
                         </div>
-                    )}
+                    )} */}
 
                     {/* Action Buttons */}
                     <div style={{ marginTop: 16, display: 'flex', gap: 8 }}>
