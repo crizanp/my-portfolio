@@ -10,6 +10,9 @@ import ImageCompression from './Tools/ImageCompression';
 import ImageToPdf from './Tools/ImageToPdf';
 import PdfToImages from './Tools/PdfToImages';
 import MergePdf from './Tools/MergePdf';
+import SplitPdf from './Tools/SplitPdf';
+import PdfCompressor from './Tools/PdfCompressor';
+
 
 import AudioEncrypt from './Tools/AudioEncryption';
 import AudioDecrypt from './Tools/AudioDecryption';
@@ -46,6 +49,11 @@ export default function ToolRunner(){
     if (slug === 'image-to-pdf' || slug === 'image-pdf') return <ImageToPdf />;
   if (slug === 'pdf-to-images' || slug === 'pdf-images') return <PdfToImages />;
   if (slug === 'merge-pdfs' || slug === 'pdf-merge') return <MergePdf />;
+  if (slug === 'split-pdf' || slug === 'pdf-split') return <SplitPdf />;
+  }
+
+  if (category === 'pdf-compressor') {
+    if (slug === 'pdf-compressor' || slug === 'pdf-compress') return <PdfCompressor />;
   }
 
   if (category === 'file-secure') {

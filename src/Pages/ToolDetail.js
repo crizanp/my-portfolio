@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 const subtools = {
-  'pdf-converter': ['Image to PDF','PDF to Images','Merge PDFs','Split PDF','Image Compressor'],
-  'image-compress': ['Image Compressor'],
+  'pdf-converter': ['Image to PDF','PDF to Images','Merge PDFs','Split PDF'],
+  'image-compress': ['Image Compressor'],'pdf-compress': ['pdf Compressor'],
   'video-tools': ['Video Converter','Video to Audio','Audio to Video'],
   'text-secure': ['Text Encryption','Text Decryption'],
   'file-secure': ['File Encryption','Image Encryption','Audio Encryption','Video Encryption','PDF Encryption'],
