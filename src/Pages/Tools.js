@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 
 // list of tool categories (display order). We keep names for UI and derive slugs when needed.
 const tools = [
-  'PDF Converter','File Secure','Text Secure','Image Compress','Nepali Unicode'
+  'News Aggregator','PDF Converter','File Secure','Text Secure','Image Compress','Nepali Unicode'
 ];
 // 'Audio Tools','QR & Barcode','Converters','Unit Converter','Crypto Tools','Website Analysis','Timezone Tools''Image Tools','Video Tools',
 // Featured category slugs will be shown at the top. Change this array to promote categories.
-const featuredSlugs = ['nepali-unicode','file-secure'];
+const featuredSlugs = ['news-aggregator','nepali-unicode','file-secure'];
 
 const subtools = {
+  'news-aggregator': ['Global News','Nepali News'],
   'pdf-converter': ['Image to PDF','PDF to Images','Merge PDFs','Split PDF','Image Compressor'],
   'image-compress': ['Image Compressor','Image Cropper','HEIC Converter'],
   // 'video-tools': ['Video Converter','Video to Audio','Audio to Video'],

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 const subtools = {
+  'news-aggregator': ['Global News','Nepali News'],
   'pdf-converter': ['Image to PDF','PDF to Images','Merge PDFs','Split PDF'],
   'image-compress': ['Image Compressor'],'pdf-compress': ['pdf Compressor'],
   'video-tools': ['Video Converter','Video to Audio','Audio to Video'],
@@ -18,6 +19,11 @@ const subtools = {
   'website-analysis': ['Website Analysis','SEO Audit','Performance Test'],
   'password-tools': ['Password Generator','Password Strength Checker'],
   'timezone-tools': ['Timezone Converter']
+}
+
+const toolDescriptions = {
+  'Global News': 'Stay updated with latest international news from trusted sources like BBC, Reuters, CNN, and more. Features filtering by category and real-time updates.',
+  'Nepali News': 'Get the latest Nepali news from reliable sources including Kantipur, Himalayan Times, Setopati, and other major publications. Includes bilingual support.'
 }
 
 const ToolDetail = () => {
@@ -40,11 +46,12 @@ const ToolDetail = () => {
       <div className="subtool-grid" style={{ marginTop: 12 }}>
         {list.map(s => {
           const subSlug = s.toLowerCase().replace(/\s+/g, '-');
+          const description = toolDescriptions[s] || `Browse the tools that can help with ${s.toLowerCase()}.`;
           return (
             <Link key={s} to={`/tools/${id}/${encodeURIComponent(subSlug)}`} className="tool-card" style={{ padding: 14 }}>
               <div style={{ fontWeight: 600 }}>{s}</div>
               <div style={{ marginTop: 8, color: '#666' }}>
-                Browse the tools that can help with {s.toLowerCase()}.
+                {description}
               </div>
             </Link>
           );

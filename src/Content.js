@@ -10,6 +10,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import Contact from "./Pages/Contact";
 import Header from "./Components/Header";
+import Navbar from "./Components/Navbar";
 import Login from "./Pages/Login";
 import Private from "./Pages/Private";
 import Tools from "./Pages/Tools";
@@ -20,6 +21,9 @@ import AIToolDetail from "./Pages/AIToolDetail";
 import ExamTimerPrep from "./Pages/ai-project/exam-timer-and-preperation-tracker";
 import TextEncrypt from "./Pages/TextEncrypt";
 import TextDecrypt from "./Pages/TextDecrypt";
+import GlobalNews from "./Pages/GlobalNews";
+import NepaliNews from "./Pages/NepaliNews";
+import NewsLayout from "./Components/NewsLayout";
 
 
 AOS.init({
@@ -54,6 +58,19 @@ const Content = () =>{
                 <Route path="/ai/:id" element={<AIToolDetail />} />
               </Route>
             </Route>
+            {/* News pages with minimal layout */}
+            <Route path="/global-news" element={
+              <NewsLayout>
+                <Navbar />
+                <GlobalNews />
+              </NewsLayout>
+            } />
+            <Route path="/nepali-news" element={
+              <NewsLayout>
+                <Navbar />
+                <NepaliNews />
+              </NewsLayout>
+            } />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </div>

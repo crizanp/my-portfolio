@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import TextEncrypt from './Tools/TextEncryption';
 import TextDecrypt from './Tools/TextDecryption';
 import FileEncrypt from './Tools/FileEncryption';
@@ -25,6 +25,12 @@ import TranslationPage from './TranslationPage';
 export default function ToolRunner(){
   const { category, subtool } = useParams();
   const slug = decodeURIComponent(subtool || '').toLowerCase();
+
+  // News Aggregator routing
+  if (category === 'news-aggregator') {
+    if (slug === 'global-news') return <Navigate to="/global-news" replace />;
+    if (slug === 'nepali-news') return <Navigate to="/nepali-news" replace />;
+  }
 
   // legacy/alternate single-tool routes
   if (category === 'image-compress') {
