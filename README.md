@@ -13,9 +13,6 @@ Portfolio website build using React JS and backend from node.js
 react-tsparticle, react-typewriter-effect, react icons
 
 
-### 📌 Snap Shot of Main Page 
-
-![image](https://user-images.githubusercontent.com/89627914/177928886-3f5f6123-80c1-4912-bd01-7ce3a9963877.png)
 
 ### 📬 Connect With
 
