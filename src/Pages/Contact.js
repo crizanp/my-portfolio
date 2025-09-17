@@ -69,21 +69,14 @@ function Contact() {
                     <div className="map">
                       <div style={{ width: "100%" }}>
                         <iframe
-                          title="map"
-                          width="100%"
-                          height="300"
-                          frameBorder="0"
-                          scrolling="no"
-                          marginHeight="0"
-                          marginWidth="0"
+                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3533.484755527345!2d85.38312007525244!3d27.671408676203182!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1b3f9c6226f3%3A0x79e96f12c3d68b81!2sFoxbeep%20Technology%20Pvt%20Ltd.!5e0!3m2!1sen!2snp!4v1758093425467!5m2!1sen!2snp"
+                          width="600"
+                          height="450"
+                          style={{ border: 0 }}
+                          allowFullScreen=""
                           loading="lazy"
-                          // onLoad={()=>setLoading(false)}
-                          src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=28.748839,%2077.191691+(kamal%20pur,%20Kamal%20vihar%20burari)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-                        >
-                          <a href="https://www.gps.ie/farm-gps/">
-                            GPS Navigation
-                          </a>
-                        </iframe>
+                          referrerPolicy="no-referrer-when-downgrade"
+                        ></iframe>
                       </div>
                     </div>
                   

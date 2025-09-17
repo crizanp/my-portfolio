@@ -3,29 +3,29 @@ import { Link } from 'react-router-dom';
 
 // list of tool categories (display order). We keep names for UI and derive slugs when needed.
 const tools = [
-  'PDF Converter','File Secure','Text Secure','Video Tools','Image Compress','Image Tools','Audio Tools','QR & Barcode','Converters','Unit Converter','Crypto Tools','Website Analysis','Timezone Tools','Nepali Unicode','Gif'
+  'PDF Converter','File Secure','Text Secure','Image Compress','Nepali Unicode'
 ];
-
+// 'Audio Tools','QR & Barcode','Converters','Unit Converter','Crypto Tools','Website Analysis','Timezone Tools''Image Tools','Video Tools',
 // Featured category slugs will be shown at the top. Change this array to promote categories.
 const featuredSlugs = ['nepali-unicode','file-secure'];
 
 const subtools = {
   'pdf-converter': ['Image to PDF','PDF to Images','Merge PDFs','Split PDF','Image Compressor'],
   'image-compress': ['Image Compressor','Image Cropper','HEIC Converter'],
-  'video-tools': ['Video Converter','Video to Audio','Audio to Video'],
+  // 'video-tools': ['Video Converter','Video to Audio','Audio to Video'],
   'text-secure': ['Text Encryption','Text Decryption'],
   'file-secure': ['File Encryption','Image Encryption','Audio Encryption','Video Encryption','PDF Encryption'],
-  'gif': ['GIF Converter'],
+  // 'gif': ['GIF Converter'],
   'nepali-unicode': ['Nepali Unicode'],
   'image-tools': ['Image to PDF','Image Compressor','Image Cropper','SVG Converter','HEIC Converter'],
-  'audio-tools': ['Audio Converter','Audio to Video','Video to Audio','Text to Speech'],
-  'qr-&-barcode': ['QR Code Generator','Barcode Generator','Website Analysis'],
-  'converters': ['Unit Converter','Crypto Converter','HEIC Converter'],
-  'unit-converter': ['Unit Converter'],
-  'crypto-tools': ['Crypto Converter','Currency Converter'],
-  'website-analysis': ['Website Analysis','SEO Audit','Performance Test'],
-  'password-tools': ['Password Generator','Password Strength Checker'],
-  'timezone-tools': ['Timezone Converter']
+  // 'audio-tools': ['Audio Converter','Audio to Video','Video to Audio','Text to Speech'],
+  // 'qr-&-barcode': ['QR Code Generator','Barcode Generator','Website Analysis'],
+  // 'converters': ['Unit Converter','Crypto Converter','HEIC Converter'],
+  // 'unit-converter': ['Unit Converter'],
+  // 'crypto-tools': ['Crypto Converter','Currency Converter'],
+  // 'website-analysis': ['Website Analysis','SEO Audit','Performance Test'],
+  // 'password-tools': ['Password Generator','Password Strength Checker'],
+  // 'timezone-tools': ['Timezone Converter']
 }
 
 const Tools = () => {

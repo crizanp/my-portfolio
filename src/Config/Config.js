@@ -18,34 +18,29 @@ export const SkillSet = [
     { id: '21', name: 'TensorFlow', imgsrc: 'images/tenserflow.png' },
     { id: '22', name: 'Pandas', imgsrc: 'images/pandas.png' },
     { id: '23', name: 'NumPy', imgsrc: 'images/NumPy.webp' },
-    { id: '24', name: 'Jupyter Notebooks', imgsrc: '' },
-    // Testing
-    { id: '30', name: 'React Testing Library', imgsrc: '' },
-
+    { id: '24', name: 'Jupyter Notebooks', imgsrc: 'images/Jupyter_logo.svg.png' },
+    
     // Databases
     { id: '31', name: 'MongoDB', imgsrc: 'images/mongodb.png' },
     { id: '32', name: 'MySQL (basic)', imgsrc: 'images/mysql.png' },
 
     // Operating Systems
-    { id: '34', name: 'Linux (Ubuntu, Debian)', imgsrc: '' },
-    { id: '35', name: 'PostGreSQL', imgsrc: '' },
+    { id: '34', name: 'Linux (Ubuntu)', imgsrc: 'images/linux.jpeg' },
+    { id: '35', name: 'PostGreSQL', imgsrc: 'images/Postgresql_elephant.svg' },
 
     // Cloud
-    { id: '36', name: 'AWS', imgsrc: '' },
+    { id: '36', name: 'AWS', imgsrc: 'images/aws.png' },
 
     // Embedded OS / Hardware
 
     // Mathematical Foundations
-    { id: '43', name: 'Calculus', imgsrc: '' },
-    { id: '44', name: 'Linear Algebra', imgsrc: '' },
-    { id: '45', name: 'Probability', imgsrc: '' },
-    { id: '46', name: 'Graph Theory', imgsrc: '' },
+
+    { id: '46', name: 'Graph Theory', imgsrc: 'images/graphtheory.png' },
 
     // Soft Skills
-    { id: '47', name: 'Problem Solving', imgsrc: '' },
-    { id: '48', name: 'Analytical Thinking', imgsrc: '' },
-    { id: '50', name: 'Documentation', imgsrc: '' },
-    { id: '52', name: 'Mentorship', imgsrc: '' },
+    { id: '47', name: 'Problem Solving', imgsrc: 'images/problemsolving.jpg' },
+    { id: '48', name: 'Analytical Thinking', imgsrc: 'images/analyticalthinking.png' },
+    { id: '50', name: 'Latex Documentation', imgsrc: 'images/latex.png' },
 ];
 
 export const ProjImg = [
@@ -60,108 +55,135 @@ export const ProjImg = [
 export const Experience = [
     {
         id: '1',
-        date: 'May 2024 - Nov 2024',
-        name: 'Data Analytics Intern',
-        company: 'Arihant Poly-Packs Ltd',
+        date: 'Dec 2024 - Present',
+        name: 'Cofounder',
+        company: 'Foxbeep Technology (foxbeep.com)',
         desc: [
-            'Worked as a member of Data Analytics and Engineering team.',
-            'Reduced raw material waste by more than 10% through data-driven analysis of extrusion and lamination process parameters.',
-            'Used statistical tools to track and analyze defect rates.',
-            'Analyzed sales data to identify trends and seasonal patterns.',
+            'I am cofounder of Foxbeep Technology, a web development company. We develop websites, web applications, and mobile applications.',
         ],
     },
     {
         id: '2',
-        date: 'Nov 2023 - Apr 2024',
-        name: 'Junior Data Engineer (Intern)',
-        company: 'Arihant Multi-Fibres Ltd',
+        date: 'May 2024 - Nov 2024',
+        name: 'Data Analytics Intern',
+        company: 'Arihant Poly-Packs Ltd (Golchha Group)',
         desc: [
-            'Created basic ETL pipelines for data automation from source systems to analytics and storage platforms.',
-            'Wrote SQL queries for data extraction and manipulation to support reporting and validation.',
-            'Performed data cleaning and preprocessing using Python to ensure accuracy and consistency.',
-            'Gained experience in data modeling and architecture.',
+            'I worked in the Data Analytics and Engineering team. My work helped reduce raw material waste by over 10% by studying the production process. I used statistical tools to track defects and understand their causes. I also looked at sales data to find patterns and seasonal trends.',
         ],
     },
     {
         id: '3',
         date: 'Nov 2023 - Jan 2024',
-        name: 'Junior Backend Engineer',
-        company: 'Theironist.org',
+        name: 'Backend Developer Intern',
+        company: 'Nxtech Pvt Ltd (nxtechhosting.com)',
         desc: [
-            'Developed and maintained server-side applications using Node.js and Express.js, improving system performance by 30%.',
-            'Implemented RESTful APIs for seamless front-end/back-end communication.',
-            'Integrated cloud services to optimize backend solutions, reducing operational costs by 25%.',
-            'Collaborated on microservices design and used Docker/Kubernetes for containerization and orchestration.',
+            'Built and maintained server-side applications using Node.js and Express.js, created RESTful APIs, integrated cloud services to reduce costs, and contributed to microservices design using Docker and Kubernetes.',
         ],
     },
     {
         id: '4',
-        date: 'Apr 2023 - Oct 2024',
+        date: 'Apr 2023 - Oct 2023',
         name: 'HR Manager / Lecturer / Lab Instructor',
-        company: 'Sun Beam English School',
+        company: 'Udayasi English Secondary School, Gaigat',
         desc: [
-            'Managed recruitment processes: posting vacancies, screening resumes, and conducting interviews.',
-            'Served as Lecturer for Optional II (Math) and Optional I (Computer Science) for Grade X; developed lesson plans and assessments.',
-            'Supervised lab sessions and taught programming fundamentals (QBASIC, Python, C, MS Access).',
-            'Supported teacher evaluations and coordinated extracurricular activities as member of Teacher’s Council.',
+            'Managed recruitment, taught Grade X Mathematics and Computer Science, prepared lesson plans and exams, supervised lab sessions on programming (QBASIC, Python, C, MS Access), and supported teacher evaluations and extracurricular activities.',
         ],
     },
     {
         id: '5',
-        date: 'Sep 2021 - Mar 2022',
-        name: 'Graphic Designer',
-        company: 'Dharaksha Ecosolutions',
-        desc: ['Collaborated with social media teams.', 'Designed and updated website.', 'Created social media posts and visual assets.'],
+        date: 'Jan 2023 - Dec 2024 (Part-time, Remote)',
+        name: 'Marketing & Data Analytics',
+        company: 'IGH Digital, Dubai (ighdigital.ae)',
+        desc: [
+            'Worked remotely on marketing strategies and data analysis. Analyzed campaign performance, tracked KPIs, and provided insights to optimize digital marketing efforts for the Dubai-based company.',
+        ],
     },
     {
         id: '6',
-        date: 'Feb 2020 - Present',
-        name: 'Digital Artist',
-        company: 'Independent',
-        desc: ['Self-taught digital artist on Instagram.'],
+        date: 'Sep 2021 - Dec 2021',
+        name: 'Graphic Designer',
+        company: 'Bal Sadan High School, Morang',
+        desc: ['Collaborated with social media teams.', 'Created social media posts and visual assets.'],
     },
 ];
+
+
 
 // Summary
 export const Summary =
-    'Data Scientist with hands-on experience in data analytics, machine learning, and backend systems integration. Skilled at building end-to-end ML workflows, designing ETL pipelines, and integrating analytics with backend services to drive data-driven decisions.';
+    'Data Scientist with experience in data analysis, machine learning, and backend development. Good at building ML models, handling data pipelines, and using data to support decisions.';
 
 // Projects (Academic)
 export const Projects = [
-    {
-        id: 'p1',
-        title: 'Machine Learning-based Intrusion Detection System (IDS)',
-        date: 'Mar 2023',
-        desc: [
-            'Built an ensemble-based IDS using Decision Tree, Random Forest, Extra Trees, and XGBoost.',
-            'Leveraged stacking ensemble to enhance classification performance on CICIDS2017 dataset.',
-            'Integrated a GUI to allow CSV input and output generation.',
-        ],
-        tech: ['Python', 'scikit-learn', 'XGBoost', 'Pandas', 'NumPy'],
-    },
-    {
-        id: 'p2',
-        title: 'Course Recommendation System (content-based)',
-        date: 'Sep 2023',
-        desc: [
-            'Built a content-based course recommender using TF-IDF vectorization and cosine similarity.',
-            'Processed course titles with NeatText and vectorized using CountVectorizer and TfidfVectorizer.',
-            'Developed a Streamlit GUI; serialized data and similarity matrix with Pickle.',
-        ],
-        tech: ['Python', 'scikit-learn', 'Pandas', 'NeatText', 'Streamlit', 'Pickle'],
-    },
+    
     {
         id: 'p3',
-        title: 'E-Learning Portal',
+        title: 'Machine Learning - Currency Detection App',
+        date: 'Jan 2024',
+        desc: [
+            'Developed an app to detect and recognize different currency notes using computer vision.',
+            'Implemented image processing and classification to identify denominations.',
+            'Created a user-friendly interface for mobile use.',
+        ],
+        tech: ['Python', 'OpenCV', 'TensorFlow', 'Java', 'Android Studio'],
+    },
+    {
+        id: 'p4',
+        title: 'Solubility Prediction System for Medical Use',
+        date: 'Feb 2024',
+        desc: [
+            'Built a machine learning system to predict solubility of chemical compounds for pharmaceutical applications.',
+            'Used regression models and feature engineering for accurate predictions.',
+            'Designed a simple GUI for input and result visualization.',
+        ],
+        tech: ['Python', 'scikit-learn', 'Pandas', 'NumPy', 'Tkinter'],
+    },
+    {
+        id: 'p5',
+        title: 'Home Tuition Marketplace',
         date: 'Mar 2024',
         desc: [
-            'Designed and developed a web-based platform for students and instructors to manage online classes and lessons.',
-            'Implemented registration, class enrollment, lesson viewing, and role-based access.',
-            'Followed the Waterfall model from requirements to testing and deployment.',
+            'Developed a Laravel-based platform connecting tutors and students.',
+            'Implemented user registration, course listings, booking system, and payments.',
+            'Integrated dashboards for tutors and students to manage classes and schedules.',
         ],
-        tech: ['HTML', 'CSS', 'JavaScript', 'Handlebars', 'Node.js', 'Express.js', 'MongoDB'],
+        tech: ['PHP', 'Laravel', 'MySQL', 'HTML', 'CSS', 'JavaScript'],
+    },
+    {
+        id: 'p6',
+        title: 'Company Account Management System',
+        date: 'Apr 2024',
+        desc: [
+            'Built a Laravel application to manage company accounts, invoices, and employee records.',
+            'Implemented role-based access control and reporting features.',
+            'Ensured data security and backup functionality.',
+        ],
+        tech: ['PHP', 'Laravel', 'MySQL', 'Bootstrap', 'JavaScript'],
+    },
+    {
+        id: 'p7',
+        title: 'Governmental Portal (Shram)',
+        date: 'May 2024',
+        desc: [
+            'Developed a government portal using React, Node.js, Next.js, and MongoDB.',
+            'Implemented features for citizen registration, service requests, and document management.',
+            'Followed best practices for performance, security, and scalability.',
+        ],
+        tech: ['React', 'Node.js', 'Next.js', 'MongoDB', 'Express.js', 'CSS'],
+    },
+    {
+        id: 'p8',
+        title: 'News Aggregator App',
+        date: 'Jun 2024',
+        desc: [
+            'Built a mobile app using React Native to aggregate news from multiple sources.',
+            'Implemented search, category filtering, bookmarking, and push notifications.',
+            'Optimized app performance and ensured smooth cross-platform experience.',
+        ],
+        tech: ['React Native', 'Expo', 'JavaScript', 'Firebase', 'REST APIs'],
     },
 ];
+
 
 export const Languages = [
     { id: 'l1', name: 'English', level: 'Fluent (Professional Working Proficiency)' },

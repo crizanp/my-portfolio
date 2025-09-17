@@ -72,7 +72,7 @@ const Home = () => {
             </a>
             <a
               className="link"
-              href="https://www.linkedin.com/in/srijan-pokhrel/"
+              href="https://www.linkedin.com/in/srijanpokhrel/"
               rel="noreferrer"
               target="_blank"
               aria-label="linkedin"
@@ -94,7 +94,7 @@ const Home = () => {
             </a>
             <a
               className="link"
-              href="https://github.com/crijanp"
+              href="https://github.com/crizanp"
               rel="noreferrer"
               target="_blank"
               aria-label="github"
@@ -106,7 +106,7 @@ const Home = () => {
           </div>
           <div className="links">
             <a
-              href="/assets/Resume.pdf"
+              href="#"
               className="link"
               rel="noreferrer"
               target="_blank"

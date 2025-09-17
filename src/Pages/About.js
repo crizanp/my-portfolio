@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 function About() {
   const [age, setAge] = useState("");
-  const yearOfBirth = "2001";
+  const yearOfBirth = "2000";
   const getAge = () => {
     setAge(new Date().getFullYear() - yearOfBirth);
   };
@@ -37,7 +37,7 @@ function About() {
                       {age}
                     </li>
                     <li>
-                      <strong>Birthday: </strong>07 June 2001
+                      <strong>Birthday: </strong>07 June 2000
                     </li>
                     <li>
                       <strong>Hometown: </strong>Biratnagar, Nepal
