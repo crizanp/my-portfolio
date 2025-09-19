@@ -55,53 +55,53 @@ export const globalNewsFeeds = [
 
 export const nepaliNewsFeeds = [
   {
-    name: 'Online Khabar English',
-    url: 'https://english.onlinekhabar.com/feed',
+    name: 'Online Khabar',
+    url: 'https://www.onlinekhabar.com/feed',
     category: 'General'
   },
   {
-    name: 'Ratopati English',
-    url: 'http://english.ratopati.com/rss/',
+    name: 'Kantipur Daily',
+    url: 'https://ekantipur.com/feed',
     category: 'General'
   },
   {
-    name: 'Lokaantar English',
-    url: 'http://english.lokaantar.com/feed/',
+    name: 'Setopati',
+    url: 'https://www.setopati.com/feed',
     category: 'General'
   },
   {
-    name: 'Kathmandu Tribune',
-    url: 'http://kathmandutribune.com/feed/',
+    name: 'Ratopati',
+    url: 'https://ratopati.com/feed',
     category: 'General'
   },
   {
-    name: 'Setopati English',
-    url: 'https://en.setopati.com/feed',
+    name: 'Annapurna Post',
+    url: 'https://annapurnapost.com/feed/',
     category: 'General'
   },
   {
-    name: 'Nepali Times',
-    url: 'https://www.nepalitimes.com/feed/',
+    name: 'Nagarik News',
+    url: 'https://nagariknews.nagariknetwork.com/feed',
     category: 'General'
   },
   {
-    name: 'Telegraph Nepal',
-    url: 'http://telegraphnepal.com/feed/',
+    name: 'BBC Nepali',
+    url: 'https://feeds.bbci.co.uk/nepali/rss.xml',
     category: 'General'
   },
   {
-    name: 'The Himalayan Times',
-    url: 'https://thehimalayantimes.com/feed/',
+    name: 'Gorkhapatra Online',
+    url: 'https://gorkhapatraonline.com/feed',
     category: 'General'
   },
   {
-    name: 'Nepal Online Patrika',
-    url: 'https://nepalonlinepatrika.com/rss/latest-posts',
+    name: 'Ujyaalo Online',
+    url: 'https://ujyaaloonline.com/feed',
     category: 'General'
   },
   {
-    name: 'Himalayan Times RSS',
-    url: 'https://www.thehimalayantimes.com/rssFeed/15',
+    name: 'Bahrakhari',
+    url: 'https://www.12khari.com/feed/',
     category: 'General'
   }
 ];

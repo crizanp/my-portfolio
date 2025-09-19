@@ -4,85 +4,71 @@ import RSSFetcher from '../Utils/RSSFetcher';
 import { nepaliNewsFeeds, newsCategories } from '../Config/NewsFeeds';
 import { fallbackNepaliNews } from '../Config/FallbackNews';
 import NewsArticle from '../Components/NewsArticle';
-import NewsFilter from '../Components/NewsFilter';
 import { NewsLoading, NewsSkeleton, NewsError } from '../Components/NewsLoadingStates';
 
 const NewsContainer = styled.div`
-  padding: 40px 20px;
-  max-width: 1400px;
-  margin: 0 auto;
-  background: ${props => props.theme.bg.primary};
-  min-height: 100vh;
+  .card-inner {
+    padding: 30px;
+  }
 `;
 
 const NewsHeader = styled.div`
-  text-align: center;
-  margin-bottom: 50px;
-  padding: 60px 20px 40px;
-  background: linear-gradient(135deg, ${props => props.theme.highlight.primary}15 0%, ${props => props.theme.colors.deepskyblue}10 100%);
-  border-radius: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const NewsTitle = styled.h1`
   color: rgb(${props => props.theme.title.primary});
-  font-size: 3rem;
-  font-weight: 800;
-  margin-bottom: 20px;
-  background: linear-gradient(45deg, ${props => props.theme.highlight.primary}, ${props => props.theme.colors.deepskyblue});
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  
-  @media (max-width: 768px) {
-    font-size: 2.2rem;
-  }
-`;
-
-const NewsSubtitle = styled.p`
-  color: ${props => props.theme.colors.grey};
-  font-size: 1.2rem;
-  max-width: 700px;
-  margin: 0 auto 30px;
-  line-height: 1.7;
-  font-weight: 400;
-`;
-
-const HeaderActions = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 30px;
-  flex-wrap: wrap;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
 `;
 
 const NewsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-  gap: 30px;
-  margin-top: 30px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 15px;
   
-  @media (max-width: 480px) {
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 10px;
+  }
+`;
+
+const RefreshButton = styled.button`
+  background: ${props => props.theme.highlight.primary};
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-radius: 3px;
+
+  &:hover {
+    opacity: 0.8;
   }
 `;
 
 const LoadMoreButton = styled.button`
   display: block;
-  margin: 40px auto;
+  margin: 30px auto;
   background: ${props => props.theme.highlight.primary};
   color: white;
   border: none;
-  padding: 15px 30px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
+  padding: 12px 24px;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: background 0.3s ease;
 
   &:hover {
-    background: ${props => props.theme.colors.chambreyblue};
+    opacity: 0.8;
   }
 
   &:disabled {
@@ -91,124 +77,50 @@ const LoadMoreButton = styled.button`
   }
 `;
 
-const RefreshButton = styled.button`
-  background: ${props => props.theme.highlight.primary};
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 25px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 15px rgba(${props => props.theme.highlight.rgb.primary}, 0.3);
-
-  &:hover {
-    background: ${props => props.theme.colors.chambreyblue};
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(${props => props.theme.highlight.rgb.primary}, 0.4);
-  }
-`;
-
-const StatsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin: 40px 0;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
-const StatItem = styled.div`
-  text-align: center;
-  padding: 25px 20px;
-  background: ${props => props.theme.bg.primary};
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(${props => props.theme.highlight.rgb.primary}, 0.1);
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-  }
-`;
-
-const StatNumber = styled.div`
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: ${props => props.theme.highlight.primary};
-  margin-bottom: 8px;
-`;
-
-const StatLabel = styled.div`
-  font-size: 0.95rem;
-  color: ${props => props.theme.colors.grey};
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-`;
-
-const SourcesInfo = styled.div`
-  background: rgba(${props => props.theme.highlight.rgb.primary}, 0.08);
-  padding: 25px;
-  border-radius: 15px;
-  margin: 30px 0;
-  text-align: center;
-  border: 1px solid rgba(${props => props.theme.highlight.rgb.primary}, 0.15);
-`;
-
-const SourcesTitle = styled.h3`
-  color: rgb(${props => props.theme.title.primary});
-  margin-bottom: 15px;
-  font-weight: 700;
-`;
-
-const SourcesList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 15px;
-`;
-
-const SourceTag = styled.span`
-  background: linear-gradient(45deg, ${props => props.theme.highlight.primary}, ${props => props.theme.colors.deepskyblue});
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  box-shadow: 0 2px 8px rgba(${props => props.theme.highlight.rgb.primary}, 0.3);
-`;
-
 const NepaliNews = () => {
   const [articles, setArticles] = useState([]);
-  const [filteredArticles, setFilteredArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [displayCount, setDisplayCount] = useState(12);
+  const [displayCount, setDisplayCount] = useState(9);
   const [lastUpdated, setLastUpdated] = useState(null);
-  const [showFilter, setShowFilter] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [feedsUsed, setFeedsUsed] = useState(6);
 
   const rssFetcher = new RSSFetcher();
 
-  const fetchNews = async () => {
+  // Use first 6 feeds for good balance of speed and content
+  const quickFeeds = nepaliNewsFeeds.slice(0, feedsUsed);
+
+  const fetchNews = async (isRefresh = false) => {
     try {
-      setLoading(true);
+      if (isRefresh) {
+        setIsLoadingMore(true);
+      } else {
+        setLoading(true);
+      }
       setError(null);
       
       console.log('Fetching Nepali news...');
-      const result = await rssFetcher.fetchMultipleFeeds(nepaliNewsFeeds);
+      const result = await rssFetcher.fetchMultipleFeeds(quickFeeds);
       
       if (result.articles.length === 0) {
         console.warn('No articles fetched, using fallback data');
-        setArticles(fallbackNepaliNews);
+        // Create more diverse fallback data
+        const diverseFallback = Array.from({length: 30}, (_, i) => ({
+          title: `नमूना समाचार ${i + 1}: नेपालका मुख्य घटनाक्रमहरू`,
+          description: `यो एक नमूना समाचार हो। वास्तविक समाचारका लागि कृपया पछि फर्केर हेर्नुहोस्।`,
+          link: "#",
+          pubDate: new Date(Date.now() - i * 3600000).toISOString(),
+          author: "News Team",
+          category: "General",
+          guid: `sample-${i + 1}`,
+          image: "",
+          source: "Sample News",
+          sourceName: "नमूना समाचार",
+          sourceCategory: "General",
+          formattedDate: new Date(Date.now() - i * 3600000).toLocaleDateString()
+        }));
+        setArticles(diverseFallback);
         if (result.errors.length > 0) {
           console.warn('Feed errors:', result.errors);
         }
@@ -224,10 +136,26 @@ const NepaliNews = () => {
     } catch (err) {
       console.error('Error fetching news:', err);
       console.log('Using fallback data due to RSS error');
-      setArticles(fallbackNepaliNews);
+      // Create diverse fallback data for error case too
+      const diverseFallback = Array.from({length: 30}, (_, i) => ({
+        title: `नमूना समाचार ${i + 1}: नेपालका मुख्य घटनाक्रमहरू`,
+        description: `यो एक नमूना समाचार हो। वास्तविक समाचारका लागि कृपया पछि फर्केर हेर्नुहोस्।`,
+        link: "#",
+        pubDate: new Date(Date.now() - i * 3600000).toISOString(),
+        author: "News Team",
+        category: "General",
+        guid: `sample-error-${i + 1}`,
+        image: "",
+        source: "Sample News",
+        sourceName: "नमूना समाचार",
+        sourceCategory: "General",
+        formattedDate: new Date(Date.now() - i * 3600000).toLocaleDateString()
+      }));
+      setArticles(diverseFallback);
       setError('RSS feeds temporarily unavailable. Showing fallback content.');
     } finally {
       setLoading(false);
+      setIsLoadingMore(false);
     }
   };
 
@@ -235,52 +163,37 @@ const NepaliNews = () => {
     fetchNews();
   }, []);
 
-  useEffect(() => {
-    let filtered = articles;
-
-    // Filter by category
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter(article => 
-        article.sourceCategory === selectedCategory
-      );
-    }
-
-    // Filter by search term
-    if (searchTerm) {
-      const searchLower = searchTerm.toLowerCase();
-      filtered = filtered.filter(article =>
-        article.title.toLowerCase().includes(searchLower) ||
-        article.description.toLowerCase().includes(searchLower) ||
-        article.sourceName.toLowerCase().includes(searchLower)
-      );
-    }
-
-    setFilteredArticles(filtered);
-  }, [articles, selectedCategory, searchTerm]);
+  // No filtering: show all fetched articles
 
   const handleLoadMore = () => {
-    setDisplayCount(prev => prev + 12);
+    // If we're running low on articles and haven't used all feeds, fetch more
+    if (articles.length - displayCount < 6 && feedsUsed < nepaliNewsFeeds.length) {
+      setFeedsUsed(prev => Math.min(prev + 2, nepaliNewsFeeds.length));
+      fetchNews(true);
+    }
+    setDisplayCount(prev => prev + 9);
   };
 
   const handleRefresh = () => {
-    setDisplayCount(12);
-    fetchNews();
+    setDisplayCount(9);
+    setFeedsUsed(6); // Reset to initial feed count
+    fetchNews(true);
   };
 
-  const displayedArticles = filteredArticles.slice(0, displayCount);
-  const hasMore = displayCount < filteredArticles.length;
+  const displayedArticles = articles.slice(0, displayCount);
+  const hasMore = displayCount < articles.length;
 
   if (loading && articles.length === 0) {
     return (
       <NewsContainer>
-        <NewsHeader>
-          <NewsTitle>नेपाली समाचार</NewsTitle>
-          <NewsSubtitle>
-            विश्वसनीय नेपाली समाचार स्रोतहरूबाट नवीनतम समाचारहरू प्राप्त गर्नुहोस्
-          </NewsSubtitle>
-        </NewsHeader>
-        <NewsLoading message="नेपाली समाचार लोड गर्दै..." />
-        <NewsSkeleton count={6} />
+        <div className="card-inner">
+          <div className="card-wrap">
+            <NewsHeader>
+              <NewsTitle>नेपाली समाचार</NewsTitle>
+            </NewsHeader>
+            <NewsLoading message="नेपाली समाचार लोड गर्दै..." />
+          </div>
+        </div>
       </NewsContainer>
     );
   }
@@ -288,115 +201,51 @@ const NepaliNews = () => {
   if (error && articles.length === 0) {
     return (
       <NewsContainer>
-        <NewsHeader>
-          <NewsTitle>नेपाली समाचार</NewsTitle>
-          <NewsSubtitle>
-            विश्वसनीय नेपाली समाचार स्रोतहरूबाट नवीनतम समाचारहरू प्राप्त गर्नुहोस्
-          </NewsSubtitle>
-        </NewsHeader>
-        <NewsError message={error} onRetry={fetchNews} />
+        <div className="card-inner">
+          <div className="card-wrap">
+            <NewsHeader>
+              <NewsTitle>नेपाली समाचार</NewsTitle>
+            </NewsHeader>
+            <NewsError message={error} onRetry={fetchNews} />
+          </div>
+        </div>
       </NewsContainer>
     );
   }
 
   return (
     <NewsContainer>
-      <NewsHeader>
-        <NewsTitle>🇳🇵 नेपाली समाचार</NewsTitle>
-        {/* Minimal subtitle removed to keep the page focused on news */}
-        <HeaderActions>
-          <RefreshButton onClick={handleRefresh}>
-            🔄 Refresh समाचार
-          </RefreshButton>
-        </HeaderActions>
-      </NewsHeader>
+      <div className="card-inner">
+        <div className="card-wrap">
+          <NewsHeader>
+            <NewsTitle>नेपाली समाचार</NewsTitle>
+            <RefreshButton onClick={handleRefresh} disabled={isLoadingMore}>
+              {isLoadingMore ? '⟳' : 'Refresh'}
+            </RefreshButton>
+          </NewsHeader>
 
-      {/* <StatsContainer>
-        <StatItem>
-          <StatNumber>{articles.length}</StatNumber>
-          <StatLabel>कुल समाचारहरू</StatLabel>
-        </StatItem>
-        <StatItem>
-          <StatNumber>{nepaliNewsFeeds.length}</StatNumber>
-          <StatLabel>समाचार स्रोतहरू</StatLabel>
-        </StatItem>
-        <StatItem>
-          <StatNumber>{newsCategories.nepali.length}</StatNumber>
-          <StatLabel>श्रेणीहरू</StatLabel>
-        </StatItem>
-        {lastUpdated && (
-          <StatItem>
-            <StatNumber>{lastUpdated.toLocaleTimeString()}</StatNumber>
-            <StatLabel>अन्तिम अपडेट</StatLabel>
-          </StatItem>
-        )}
-      </StatsContainer> */}
+          <NewsGrid>
+            {articles.slice(0, displayCount).map((article, index) => (
+              <NewsArticle key={`${article.guid || article.link}-${index}`} article={article} />
+            ))}
+          </NewsGrid>
 
-  <SourcesInfo>
-        <SourcesTitle>समाचार स्रोतहरू</SourcesTitle>
-        <p style={{ color: '#666', marginBottom: '15px' }}>
-          हामी नेपालका प्रमुख र विश्वसनीय समाचार संस्थानहरूबाट समाचार संकलन गर्छौं
-        </p>
-        <SourcesList>
-          {nepaliNewsFeeds.map(feed => (
-            <SourceTag key={feed.name}>{feed.name}</SourceTag>
-          ))}
-        </SourcesList>
-      </SourcesInfo>
+          {articles.length === 0 && !loading && (
+            <NewsError 
+              message="कुनै समाचार फेला परेन" 
+              onRetry={() => {
+                fetchNews();
+              }} 
+            />
+          )}
 
-      {/* Compact filter: hidden by default, shown via toggle to save vertical space */}
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20, marginBottom: 10 }}>
-        <button
-          onClick={() => setShowFilter(prev => !prev)}
-          style={{
-            background: 'transparent',
-            border: '1px solid rgba(0,0,0,0.08)',
-            padding: '10px 16px',
-            borderRadius: 999,
-            cursor: 'pointer',
-            fontWeight: 600
-          }}
-        >
-          {showFilter ? 'Hide Filters' : 'Filters'}
-        </button>
-      </div>
-
-      {showFilter && (
-        <div style={{ maxWidth: 920, margin: '0 auto 24px' }}>
-          <NewsFilter
-            compact
-            categories={newsCategories.nepali}
-            selectedCategory={selectedCategory}
-            onCategoryChange={setSelectedCategory}
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            resultsCount={filteredArticles.length}
-            totalCount={articles.length}
-          />
+          {articles.length > displayCount && (
+            <LoadMoreButton onClick={handleLoadMore} disabled={loading || isLoadingMore}>
+              {(loading || isLoadingMore) ? 'लोड गर्दै...' : `थप लोड गर्नुहोस् (${articles.length - displayCount} बाँकी)`}
+            </LoadMoreButton>
+          )}
         </div>
-      )}
-
-      <NewsGrid>
-        {displayedArticles.map((article, index) => (
-          <NewsArticle key={`${article.guid || article.link}-${index}`} article={article} />
-        ))}
-      </NewsGrid>
-
-      {filteredArticles.length === 0 && !loading && (
-        <NewsError 
-          message="कुनै समाचार फेला परेन" 
-          onRetry={() => {
-            setSearchTerm('');
-            setSelectedCategory('all');
-          }} 
-        />
-      )}
-
-      {hasMore && (
-        <LoadMoreButton onClick={handleLoadMore} disabled={loading}>
-          {loading ? 'लोड गर्दै...' : `थप लोड गर्नुहोस् (${filteredArticles.length - displayCount} बाँकी)`}
-        </LoadMoreButton>
-      )}
+      </div>
     </NewsContainer>
   );
 };

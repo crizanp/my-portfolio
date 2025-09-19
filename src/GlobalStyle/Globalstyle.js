@@ -197,7 +197,6 @@ input[type="submit"] {
 .card-inner {
   background-color: ${({ theme }) => theme.bg.primary};
   padding: 0;
-  position: absolute;
   left: 560px;
   right: 0;
   top: 15px;

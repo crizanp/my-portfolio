@@ -4,85 +4,71 @@ import RSSFetcher from '../Utils/RSSFetcher';
 import { globalNewsFeeds, newsCategories } from '../Config/NewsFeeds';
 import { fallbackGlobalNews } from '../Config/FallbackNews';
 import NewsArticle from '../Components/NewsArticle';
-import NewsFilter from '../Components/NewsFilter';
 import { NewsLoading, NewsSkeleton, NewsError } from '../Components/NewsLoadingStates';
 
 const NewsContainer = styled.div`
-  padding: 40px 20px;
-  max-width: 1400px;
-  margin: 0 auto;
-  background: ${props => props.theme.bg.primary};
-  min-height: 100vh;
+  .card-inner {
+    padding: 30px;
+  }
 `;
 
 const NewsHeader = styled.div`
-  text-align: center;
-  margin-bottom: 50px;
-  padding: 60px 20px 40px;
-  background: linear-gradient(135deg, ${props => props.theme.highlight.primary}15 0%, ${props => props.theme.colors.deepskyblue}10 100%);
-  border-radius: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const NewsTitle = styled.h1`
   color: rgb(${props => props.theme.title.primary});
-  font-size: 3rem;
-  font-weight: 800;
-  margin-bottom: 20px;
-  background: linear-gradient(45deg, ${props => props.theme.highlight.primary}, ${props => props.theme.colors.deepskyblue});
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  
-  @media (max-width: 768px) {
-    font-size: 2.2rem;
-  }
-`;
-
-const NewsSubtitle = styled.p`
-  color: ${props => props.theme.colors.grey};
-  font-size: 1.2rem;
-  max-width: 700px;
-  margin: 0 auto 30px;
-  line-height: 1.7;
-  font-weight: 400;
-`;
-
-const HeaderActions = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 30px;
-  flex-wrap: wrap;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
 `;
 
 const NewsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-  gap: 30px;
-  margin-top: 30px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 15px;
   
-  @media (max-width: 480px) {
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 10px;
+  }
+`;
+
+const RefreshButton = styled.button`
+  background: ${props => props.theme.highlight.primary};
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-radius: 3px;
+
+  &:hover {
+    opacity: 0.8;
   }
 `;
 
 const LoadMoreButton = styled.button`
   display: block;
-  margin: 40px auto;
+  margin: 30px auto;
   background: ${props => props.theme.highlight.primary};
   color: white;
   border: none;
-  padding: 15px 30px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
+  padding: 12px 24px;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: background 0.3s ease;
 
   &:hover {
-    background: ${props => props.theme.colors.chambreyblue};
+    opacity: 0.8;
   }
 
   &:disabled {
@@ -91,90 +77,50 @@ const LoadMoreButton = styled.button`
   }
 `;
 
-const RefreshButton = styled.button`
-  background: ${props => props.theme.highlight.primary};
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 25px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 15px rgba(${props => props.theme.highlight.rgb.primary}, 0.3);
-
-  &:hover {
-    background: ${props => props.theme.colors.chambreyblue};
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(${props => props.theme.highlight.rgb.primary}, 0.4);
-  }
-`;
-
-const StatsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin: 40px 0;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
-const StatItem = styled.div`
-  text-align: center;
-  padding: 25px 20px;
-  background: ${props => props.theme.bg.primary};
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(${props => props.theme.highlight.rgb.primary}, 0.1);
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-  }
-`;
-
-const StatNumber = styled.div`
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: ${props => props.theme.highlight.primary};
-  margin-bottom: 8px;
-`;
-
-const StatLabel = styled.div`
-  font-size: 0.95rem;
-  color: ${props => props.theme.colors.grey};
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-`;
-
 const GlobalNews = () => {
   const [articles, setArticles] = useState([]);
-  const [filteredArticles, setFilteredArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [displayCount, setDisplayCount] = useState(12);
+  const [displayCount, setDisplayCount] = useState(9);
   const [lastUpdated, setLastUpdated] = useState(null);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [feedsUsed, setFeedsUsed] = useState(6);
 
   const rssFetcher = new RSSFetcher();
 
-  const fetchNews = async () => {
+  // Use first 6 feeds for good balance of speed and content
+  const quickFeeds = globalNewsFeeds.slice(0, feedsUsed);
+
+  const fetchNews = async (isRefresh = false) => {
     try {
-      setLoading(true);
+      if (isRefresh) {
+        setIsLoadingMore(true);
+      } else {
+        setLoading(true);
+      }
       setError(null);
       
       console.log('Fetching global news...');
-      const result = await rssFetcher.fetchMultipleFeeds(globalNewsFeeds);
+      const result = await rssFetcher.fetchMultipleFeeds(quickFeeds);
       
       if (result.articles.length === 0) {
         console.warn('No articles fetched, using fallback data');
-        setArticles(fallbackGlobalNews);
+        // Create more diverse fallback data
+        const diverseFallback = Array.from({length: 30}, (_, i) => ({
+          title: `Sample News ${i + 1}: Global Events and Updates`,
+          description: `This is a sample news article. Please check back later for real news updates.`,
+          link: "#",
+          pubDate: new Date(Date.now() - i * 3600000).toISOString(),
+          author: "News Team",
+          category: "International",
+          guid: `sample-${i + 1}`,
+          image: "",
+          source: "Sample News",
+          sourceName: "Sample News",
+          sourceCategory: "International",
+          formattedDate: new Date(Date.now() - i * 3600000).toLocaleDateString()
+        }));
+        setArticles(diverseFallback);
         if (result.errors.length > 0) {
           console.warn('Feed errors:', result.errors);
         }
@@ -190,10 +136,26 @@ const GlobalNews = () => {
     } catch (err) {
       console.error('Error fetching news:', err);
       console.log('Using fallback data due to RSS error');
-      setArticles(fallbackGlobalNews);
+      // Create diverse fallback data for error case too
+      const diverseFallback = Array.from({length: 30}, (_, i) => ({
+        title: `Sample News ${i + 1}: Global Events and Updates`,
+        description: `This is a sample news article. Please check back later for real news updates.`,
+        link: "#",
+        pubDate: new Date(Date.now() - i * 3600000).toISOString(),
+        author: "News Team",
+        category: "International",
+        guid: `sample-error-${i + 1}`,
+        image: "",
+        source: "Sample News",
+        sourceName: "Sample News",
+        sourceCategory: "International",
+        formattedDate: new Date(Date.now() - i * 3600000).toLocaleDateString()
+      }));
+      setArticles(diverseFallback);
       setError('RSS feeds temporarily unavailable. Showing fallback content.');
     } finally {
       setLoading(false);
+      setIsLoadingMore(false);
     }
   };
 
@@ -201,52 +163,37 @@ const GlobalNews = () => {
     fetchNews();
   }, []);
 
-  useEffect(() => {
-    let filtered = articles;
-
-    // Filter by category
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter(article => 
-        article.sourceCategory === selectedCategory
-      );
-    }
-
-    // Filter by search term
-    if (searchTerm) {
-      const searchLower = searchTerm.toLowerCase();
-      filtered = filtered.filter(article =>
-        article.title.toLowerCase().includes(searchLower) ||
-        article.description.toLowerCase().includes(searchLower) ||
-        article.sourceName.toLowerCase().includes(searchLower)
-      );
-    }
-
-    setFilteredArticles(filtered);
-  }, [articles, selectedCategory, searchTerm]);
+  // No filtering: show all fetched articles
 
   const handleLoadMore = () => {
-    setDisplayCount(prev => prev + 12);
+    // If we're running low on articles and haven't used all feeds, fetch more
+    if (articles.length - displayCount < 6 && feedsUsed < globalNewsFeeds.length) {
+      setFeedsUsed(prev => Math.min(prev + 2, globalNewsFeeds.length));
+      fetchNews(true);
+    }
+    setDisplayCount(prev => prev + 9);
   };
 
   const handleRefresh = () => {
-    setDisplayCount(12);
-    fetchNews();
+    setDisplayCount(9);
+    setFeedsUsed(6); // Reset to initial feed count
+    fetchNews(true);
   };
 
-  const displayedArticles = filteredArticles.slice(0, displayCount);
-  const hasMore = displayCount < filteredArticles.length;
+  const displayedArticles = articles.slice(0, displayCount);
+  const hasMore = displayCount < articles.length;
 
   if (loading && articles.length === 0) {
     return (
       <NewsContainer>
-        <NewsHeader>
-          <NewsTitle>Global News</NewsTitle>
-          <NewsSubtitle>
-            Stay informed with the latest news from trusted international sources
-          </NewsSubtitle>
-        </NewsHeader>
-        <NewsLoading message="Loading global news..." />
-        <NewsSkeleton count={6} />
+        <div className="card-inner">
+          <div className="card-wrap">
+            <NewsHeader>
+              <NewsTitle>Global News</NewsTitle>
+            </NewsHeader>
+            <NewsLoading message="Loading global news..." />
+          </div>
+        </div>
       </NewsContainer>
     );
   }
@@ -254,83 +201,51 @@ const GlobalNews = () => {
   if (error && articles.length === 0) {
     return (
       <NewsContainer>
-        <NewsHeader>
-          <NewsTitle>Global News</NewsTitle>
-          <NewsSubtitle>
-            Stay informed with the latest news from trusted international sources
-          </NewsSubtitle>
-        </NewsHeader>
-        <NewsError message={error} onRetry={fetchNews} />
+        <div className="card-inner">
+          <div className="card-wrap">
+            <NewsHeader>
+              <NewsTitle>Global News</NewsTitle>
+            </NewsHeader>
+            <NewsError message={error} onRetry={fetchNews} />
+          </div>
+        </div>
       </NewsContainer>
     );
   }
 
   return (
     <NewsContainer>
-      <NewsHeader>
-        <NewsTitle>🌍 Global News</NewsTitle>
-        <NewsSubtitle>
-          Stay informed with the latest international news from trusted sources including BBC, Reuters, CNN, and more
-        </NewsSubtitle>
-        <HeaderActions>
-          <RefreshButton onClick={handleRefresh}>
-            🔄 Refresh News
-          </RefreshButton>
-        </HeaderActions>
-      </NewsHeader>
+      <div className="card-inner">
+        <div className="card-wrap">
+          <NewsHeader>
+            <NewsTitle>Global News</NewsTitle>
+            <RefreshButton onClick={handleRefresh} disabled={isLoadingMore}>
+              {isLoadingMore ? '⟳' : 'Refresh'}
+            </RefreshButton>
+          </NewsHeader>
 
-      <StatsContainer>
-        <StatItem>
-          <StatNumber>{articles.length}</StatNumber>
-          <StatLabel>Total Articles</StatLabel>
-        </StatItem>
-        <StatItem>
-          <StatNumber>{globalNewsFeeds.length}</StatNumber>
-          <StatLabel>News Sources</StatLabel>
-        </StatItem>
-        <StatItem>
-          <StatNumber>{newsCategories.global.length}</StatNumber>
-          <StatLabel>Categories</StatLabel>
-        </StatItem>
-        {lastUpdated && (
-          <StatItem>
-            <StatNumber>{lastUpdated.toLocaleTimeString()}</StatNumber>
-            <StatLabel>Last Updated</StatLabel>
-          </StatItem>
-        )}
-      </StatsContainer>
+          <NewsGrid>
+            {displayedArticles.map((article, index) => (
+              <NewsArticle key={`${article.guid || article.link}-${index}`} article={article} />
+            ))}
+          </NewsGrid>
 
-      <NewsFilter
-        categories={newsCategories.global}
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        resultsCount={filteredArticles.length}
-        totalCount={articles.length}
-      />
+          {articles.length === 0 && !loading && (
+            <NewsError 
+              message="No articles found" 
+              onRetry={() => {
+                fetchNews();
+              }} 
+            />
+          )}
 
-      <NewsGrid>
-        {displayedArticles.map((article, index) => (
-          <NewsArticle key={`${article.guid || article.link}-${index}`} article={article} />
-        ))}
-      </NewsGrid>
-
-      {filteredArticles.length === 0 && !loading && (
-        <NewsError 
-          message="No articles found" 
-          onRetry={() => {
-            setSearchTerm('');
-            setSelectedCategory('all');
-          }} 
-        />
-      )}
-
-      {hasMore && (
-        <LoadMoreButton onClick={handleLoadMore} disabled={loading}>
-          {loading ? 'Loading...' : `Load More (${filteredArticles.length - displayCount} remaining)`}
-        </LoadMoreButton>
-      )}
+          {hasMore && (
+            <LoadMoreButton onClick={handleLoadMore} disabled={loading || isLoadingMore}>
+              {(loading || isLoadingMore) ? 'Loading...' : `Load More (${articles.length - displayCount} remaining)`}
+            </LoadMoreButton>
+          )}
+        </div>
+      </div>
     </NewsContainer>
   );
 };
