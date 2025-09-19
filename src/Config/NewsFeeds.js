@@ -55,13 +55,8 @@ export const globalNewsFeeds = [
 
 export const nepaliNewsFeeds = [
   {
-    name: 'Online Khabar',
-    url: 'https://www.onlinekhabar.com/feed',
-    category: 'General'
-  },
-  {
-    name: 'Kantipur Daily',
-    url: 'https://ekantipur.com/feed',
+    name: 'BBC Nepali',
+    url: 'https://feeds.bbci.co.uk/nepali/rss.xml',
     category: 'General'
   },
   {
@@ -75,18 +70,8 @@ export const nepaliNewsFeeds = [
     category: 'General'
   },
   {
-    name: 'Annapurna Post',
-    url: 'https://annapurnapost.com/feed/',
-    category: 'General'
-  },
-  {
-    name: 'Nagarik News',
-    url: 'https://nagariknews.nagariknetwork.com/feed',
-    category: 'General'
-  },
-  {
-    name: 'BBC Nepali',
-    url: 'https://feeds.bbci.co.uk/nepali/rss.xml',
+    name: 'Ujyaalo Online',
+    url: 'https://ujyaaloonline.com/feed',
     category: 'General'
   },
   {
@@ -95,8 +80,23 @@ export const nepaliNewsFeeds = [
     category: 'General'
   },
   {
-    name: 'Ujyaalo Online',
-    url: 'https://ujyaaloonline.com/feed',
+    name: 'Nagarik News',
+    url: 'https://nagariknews.nagariknetwork.com/feed',
+    category: 'General'
+  },
+  {
+    name: 'Online Khabar',
+    url: 'https://www.onlinekhabar.com/feed',
+    category: 'General'
+  },
+  {
+    name: 'Kantipur Daily',
+    url: 'https://ekantipur.com/feed',
+    category: 'General'
+  },
+  {
+    name: 'Annapurna Post',
+    url: 'https://annapurnapost.com/feed/',
     category: 'General'
   },
   {

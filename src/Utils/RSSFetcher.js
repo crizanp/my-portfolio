@@ -1,28 +1,51 @@
 // Alternative RSS fetcher using RSS-to-JSON services
 class RSSFetcher {
   constructor() {
-    // Free RSS-to-JSON APIs that work without CORS issues
+    // Multiple RSS-to-JSON APIs for better reliability
     this.apis = [
       {
         name: 'RSS2JSON',
         baseUrl: 'https://api.rss2json.com/v1/api.json?rss_url=',
-        transform: this.transformRSS2JSON.bind(this)
+        transform: this.transformRSS2JSON.bind(this),
+        timeout: 8000
       },
       {
-        name: 'RSS-to-JSON API',
-        baseUrl: 'https://rss-to-json-serverless-api.vercel.app/api?feedURL=',
-        transform: this.transformRSSToJSON.bind(this)
+        name: 'AllOrigins Proxy',
+        baseUrl: 'https://api.allorigins.win/get?url=',
+        transform: this.transformAllOrigins.bind(this),
+        timeout: 10000
+      },
+      {
+        name: 'RSS Parse API',
+        baseUrl: 'https://rss-parser-api.herokuapp.com/api?url=',
+        transform: this.transformRSSParser.bind(this),
+        timeout: 12000
       }
     ];
     this.currentApiIndex = 0;
+    this.rateLimitDelay = 1000; // 1 second delay between requests
+    this.lastRequestTime = 0;
   }
 
   get currentApi() {
     return this.apis[this.currentApiIndex];
   }
 
+  async waitForRateLimit() {
+    const now = Date.now();
+    const timeSinceLastRequest = now - this.lastRequestTime;
+    if (timeSinceLastRequest < this.rateLimitDelay) {
+      const delay = this.rateLimitDelay - timeSinceLastRequest;
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+    this.lastRequestTime = Date.now();
+  }
+
   async fetchFeed(url) {
     let lastError = null;
+    
+    // Wait to avoid rate limiting
+    await this.waitForRateLimit();
     
     // Try different APIs
     for (let i = 0; i < this.apis.length; i++) {
@@ -33,6 +56,11 @@ class RSSFetcher {
       } catch (error) {
         console.warn(`RSS API ${i + 1} failed:`, error.message);
         lastError = error;
+        
+        // If rate limited, wait longer before trying next API
+        if (error.message.includes('422') || error.message.includes('429')) {
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        }
       }
     }
     
@@ -43,14 +71,33 @@ class RSSFetcher {
     const apiUrl = `${this.currentApi.baseUrl}${encodeURIComponent(url)}`;
     console.log('Fetching from RSS API:', apiUrl);
     
-    const response = await fetch(apiUrl);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), this.currentApi.timeout);
     
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    try {
+      const response = await fetch(apiUrl, {
+        signal: controller.signal,
+        headers: {
+          'Accept': 'application/json',
+          'User-Agent': 'NewsAggregator/1.0'
+        }
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      return this.currentApi.transform(data);
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        throw new Error('Request timeout');
+      }
+      throw error;
     }
-    
-    const data = await response.json();
-    return this.currentApi.transform(data);
   }
 
   transformRSS2JSON(data) {
@@ -88,6 +135,63 @@ class RSSFetcher {
       image: item.image || this.extractImageFromContent(item.description || ''),
       source: data.title || 'News Source',
       formattedDate: this.formatDate(item.published || item.pubDate || '')
+    }));
+  }
+
+  transformAllOrigins(data) {
+    try {
+      // AllOrigins returns the raw content, need to parse XML
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(data.contents, 'text/xml');
+      
+      const items = xmlDoc.querySelectorAll('item');
+      const articles = [];
+      
+      for (let i = 0; i < Math.min(items.length, 20); i++) {
+        const item = items[i];
+        const title = item.querySelector('title')?.textContent || 'No Title';
+        const description = item.querySelector('description')?.textContent || '';
+        const link = item.querySelector('link')?.textContent || '';
+        const pubDate = item.querySelector('pubDate')?.textContent || '';
+        const author = item.querySelector('author')?.textContent || 'Unknown Author';
+        const category = item.querySelector('category')?.textContent || '';
+        
+        articles.push({
+          title,
+          description: this.cleanDescription(description),
+          link,
+          pubDate,
+          author,
+          category,
+          guid: link || `item-${i}`,
+          image: this.extractImageFromContent(description),
+          source: xmlDoc.querySelector('channel title')?.textContent || 'News Source',
+          formattedDate: this.formatDate(pubDate)
+        });
+      }
+      
+      return articles;
+    } catch (error) {
+      throw new Error('AllOrigins XML parsing error: ' + error.message);
+    }
+  }
+
+  transformRSSParser(data) {
+    if (!data.feed || !data.feed.entries) {
+      throw new Error('RSS Parser API error: No entries found');
+    }
+
+    return data.feed.entries.slice(0, 20).map((item, index) => ({
+      title: item.title || 'No Title',
+      description: this.cleanDescription(item.summary || item.content || ''),
+      link: item.link || '',
+      pubDate: item.published || item.updated || '',
+      author: item.author || 'Unknown Author',
+      category: item.tags ? item.tags.join(', ') : '',
+      guid: item.id || item.link || `item-${index}`,
+      image: this.extractImageFromContent(item.content || item.summary || ''),
+      source: data.feed.title || 'News Source',
+      formattedDate: this.formatDate(item.published || item.updated || '')
     }));
   }
 
@@ -148,29 +252,44 @@ class RSSFetcher {
   }
 
   async fetchMultipleFeeds(feeds) {
-    const results = await Promise.allSettled(
-      feeds.map(async (feed) => {
-        try {
-          const articles = await this.fetchFeed(feed.url);
-          return {
-            success: true,
-            feedName: feed.name,
-            articles: articles.map(article => ({
-              ...article,
-              feedCategory: feed.category || 'General'
-            }))
-          };
-        } catch (error) {
-          console.error(`Failed to fetch ${feed.name}:`, error);
-          return {
-            success: false,
-            feedName: feed.name,
-            error: error.message,
-            articles: []
-          };
-        }
-      })
-    );
+    const maxConcurrentRequests = 3; // Limit concurrent requests to avoid rate limiting
+    const results = [];
+    
+    // Process feeds in batches
+    for (let i = 0; i < feeds.length; i += maxConcurrentRequests) {
+      const batch = feeds.slice(i, i + maxConcurrentRequests);
+      
+      const batchResults = await Promise.allSettled(
+        batch.map(async (feed) => {
+          try {
+            const articles = await this.fetchFeed(feed.url);
+            return {
+              success: true,
+              feedName: feed.name,
+              articles: articles.map(article => ({
+                ...article,
+                feedCategory: feed.category || 'General'
+              }))
+            };
+          } catch (error) {
+            console.error(`Failed to fetch ${feed.name}:`, error);
+            return {
+              success: false,
+              feedName: feed.name,
+              error: error.message,
+              articles: []
+            };
+          }
+        })
+      );
+      
+      results.push(...batchResults);
+      
+      // Add delay between batches to avoid overwhelming APIs
+      if (i + maxConcurrentRequests < feeds.length) {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      }
+    }
 
     const allArticles = [];
     const errors = [];
